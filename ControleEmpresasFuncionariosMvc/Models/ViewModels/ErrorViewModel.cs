@@ -1,4 +1,4 @@
-namespace ControleEmpresasFuncionariosMvc.Models
+namespace ControleEmpresasFuncionariosMvc.Models.ViewModels
 {
     public class ErrorViewModel
     {
