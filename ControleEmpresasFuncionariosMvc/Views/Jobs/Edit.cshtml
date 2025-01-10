@@ -1,0 +1,45 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<JobDto>
+
+@{
+    ViewData["Title"] = "Editar CARGO";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form action="Edit" method="post">
+
+            <input type="hidden" name="Id" value="@this.Model.Content?.Id" />
+            <input type="hidden" name="CompanyId" value="@this.Model.Content?.CompanyId" />
+
+            @if (string.IsNullOrEmpty(this.Model.Message) == false)
+            {
+                <div class="text-danger">@(this.Model.Message)</div>
+            }
+            <div class="form-group">
+                <label id="Name">Novo título do cargo</label>
+                <input type="text" name="Name" class="control-label input-large" value="@this.Model.Content?.Name" />
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-outline-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" asp-route-companyId="@this.Model.Content?.CompanyId">Voltar à lista de cargos da empresa.</a>
+</div>
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

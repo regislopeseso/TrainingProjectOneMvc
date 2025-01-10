@@ -1,0 +1,67 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<PersonDto>
+
+@{
+    ViewData["Title"] = "Detalhes da PESSOA";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @this.Model.Content?.Name
+        </dt>
+    </dl>
+
+    <br />
+
+    <dl class="row">
+        <dt class="col-sm-2">
+            Data de Nascimento: @this.Model.Content?.BirthDate?.ToString("d")
+        </dt>
+    </dl>
+
+    <br />
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Empresa
+                </th>
+                <th>
+                    Cargo
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    Não implementado
+                </td>
+                <td>
+                    Não implementado
+                </td>
+            </tr>        
+        </tbody>
+    </table>
+
+    <br />
+
+</div>
+
+<br />
+<div>
+
+    <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
+    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
+
+</div>
+<br />
+<div>
+    <hr />
+    <a asp-action="Index">Voltar à lista de empresas</a>
+</div>

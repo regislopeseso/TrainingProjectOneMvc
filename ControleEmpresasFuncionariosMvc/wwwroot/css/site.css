@@ -29,3 +29,19 @@ body {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
   text-align: start;
 }
+
+.control-label {
+    display: block;
+}
+
+.input-large {
+    width: 300px;
+}
+
+.input-medium {
+    width: 250px;
+}
+
+.input-short {
+    width: 200px;
+}

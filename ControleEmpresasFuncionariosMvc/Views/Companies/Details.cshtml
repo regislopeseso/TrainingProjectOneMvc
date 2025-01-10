@@ -1,0 +1,43 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<CompanyDetailsDto>
+
+
+@{
+    ViewData["Title"] = "Detalhes da EMPRESA";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @this.Model.Content?.Name
+        </dt>
+    </dl>
+    <br />
+    <dl class="row">
+        <dt class="col-sm-2">
+            CNPJ: @this.Model.Content?.Cnpj
+        </dt>
+    </dl>
+</div>
+
+<br />
+<div>
+    <a class="btn btn-success" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
+    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
+</div>
+
+<div>
+    <hr />
+    <a class="btn btn-outline-dark" asp-controller="Jobs" asp-action="Index" asp-route-companyId="@this.Model.Content?.Id">Cargos <strong>(@this.Model.Content?.JobsQty)</strong></a> |
+    <a class="btn btn-outline-dark" asp-controller="JobsPersons" asp-action="Index" asp-route-companyId="@this.Model.Content?.Id">Funcionários <strong>(35)</strong></a>
+</div>
+
+
+
+<div>
+    <hr />
+    <a asp-action="Index">Voltar à lista de empresas</a>
+</div>

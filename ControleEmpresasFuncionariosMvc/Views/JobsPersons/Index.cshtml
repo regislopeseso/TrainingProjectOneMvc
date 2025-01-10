@@ -1,0 +1,71 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<List<JobPersonIndexDto>>
+
+@{
+    ViewData["Title"] = "FUNCIONÁRIOS";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" asp-route-companyId="@this.Model.Content.FirstOrDefault().Job.CompanyId" class="btn btn-success">Adicionar novo Funcionário</a>
+</p>
+
+
+<div class="accordion" id="accordionExample">
+    @for (int i = 0; i < this.Model.Content.Count; i++)
+
+    {
+        var jobPersons = this.Model.Content[i];
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@i" aria-expanded="true" aria-controls="collapse-@i">
+                    @jobPersons.Job.Name
+                </button>
+            </h2>
+            <div id="collapse-@i" class="accordion-collapse collapse show" aria-labelledby="heading-@i" data-bs-parent="#accordionExample" style="">
+                <div class="accordion-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    <strong style="font-size: 20px;">Nome</strong>
+                                </th>
+                                <th>
+                                    <strong style="font-size: 20px;">Ações</strong>
+                                </th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var person in jobPersons.Persons)
+                            {
+                                <tr>
+                                    <td>
+                                        @person.Name
+                                    </td>
+                                    <td>
+                                        <div>
+                                            <a class="btn btn-danger" asp-action="Delete" asp-route-companyId="@jobPersons.Job.CompanyId" asp-route-personId="@person.Id" asp-route-jobId="@jobPersons.Job.Id">Delete</a>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+
+    }
+
+</div>
+
+
+
+
+
+

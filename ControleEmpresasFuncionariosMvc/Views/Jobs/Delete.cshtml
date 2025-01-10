@@ -1,0 +1,25 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<JobDto>
+
+@{
+    ViewData["Title"] = "Apagar CARGO";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>
+    Tem certeza que deseja apagar o cargo:
+    <strong>@this.Model.Content?.Name </strong>?
+</h3>
+
+<form asp-action="Delete">
+    <input type="hidden" value="@this.Model.Content?.Id" />
+    <input type="hidden" name="CompanyId" value="@this.Model.Content?.CompanyId" />
+
+    <input type="submit" value="Confirmar APAGAR" class="btn btn-outline-danger" />
+</form>
+
+<div>
+    <hr />
+    <a asp-action="Index" asp-route-companyId="@this.Model.Content?.CompanyId">Voltar à lista de cargos da empresa.</a>
+</div>

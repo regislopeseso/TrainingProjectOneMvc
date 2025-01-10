@@ -1,0 +1,48 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<PersonDto>
+
+@{
+    ViewData["Title"] = "Editar PESSOA";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form action="Edit" method="post">
+
+            <input type="hidden" name="Id" value="@this.Model.Content?.Id" />
+
+            @if (string.IsNullOrEmpty(this.Model.Message) == false)
+            {
+                <div class="text-danger">@(this.Model.Message)</div>
+            }
+            <div class="form-group">
+                <label id="Name">Se necessário, corrija o nome.</label>
+                <input type="text" name="Name" class="control-label input-large" value="@this.Model.Content?.Name" />
+            </div>
+
+
+            <div class="form-group">
+                <label id="BirthDate">Se necessário, corrija a data de nascimento.</label>
+                <input type="date" name="BirthDate" class="control-label input-large" value="@this.Model.Content?.BirthDate?.ToString("yyyy-MM-dd")" />
+            </div>
+
+
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-outline-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <hr />
+    <a asp-action="Index">Voltar à lista de pessoas</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

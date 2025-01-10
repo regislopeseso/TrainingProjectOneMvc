@@ -1,0 +1,64 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<JobsPersonsDto>
+
+@{
+    ViewData["Title"] = "Adicionar Funcionário";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form action="Create" method="post">
+            <input type="hidden" name="CompanyId" value="@this.Model.Content?.CompanyId" /> 
+            @if (string.IsNullOrEmpty(this.Model.Message) == false)
+            {
+                <div class="text-danger">@(this.Model.Message)</div>
+            }
+
+            <div class="form-group">
+                <label>Pessoa</label>
+                <select name="PersonId" class="control-label input-large" required>
+                    <option selected disabled>Escolha uma Pessoa</option>
+                    @if (Model.Content != null)
+                    {
+                        foreach (var person in Model.Content.Persons)
+                        {
+                            <option value="@person.Id">@person.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Cargo</label>
+                <select name="JobId" class="control-label input-large" required>
+                    <option selected disabled>Escolha um Cargo</option>
+                    @if (Model.Content != null)
+                    {
+                        foreach (var job in Model.Content.Jobs)
+                        {
+                            <option value="@job.Id">@job.Name</option>
+                        }
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Concluir" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <hr />
+    <a asp-action="Index">Voltar à lista de empresas</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

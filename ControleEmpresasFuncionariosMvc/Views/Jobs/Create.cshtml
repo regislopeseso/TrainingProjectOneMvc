@@ -1,0 +1,41 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<JobDto>
+
+@{
+    ViewData["Title"] = "Adicionar CARGO";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-10">
+        <form action="Create" method="post">
+            <input type="hidden" name="CompanyId" value="@this.Model.Content?.CompanyId" />
+
+            @if (string.IsNullOrEmpty(this.Model.Message) == false)
+            {
+                    <div class="text-danger">@(this.Model.Message)</div>
+            }
+            <div class="form-group">
+                <label id="Name">Nome do Cargo</label>
+                <input type="text" name="Name" class="control-label input-large" value="@this.Model.Content?.Name" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Concluir" class="btn btn-success" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <hr />
+    <a asp-action="Index" asp-route-companyId="@this.Model.Content?.CompanyId">Voltar à lista de cargos da empresa @this.Model.Content.Name</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

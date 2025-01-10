@@ -1,0 +1,45 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<CompanyJobsDto>
+
+@{
+    ViewData["Title"] = "CARGOS";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<p>
+    <a asp-action="Create" asp-route-companyId="@this.Model.Content?.CompanyId" class="btn btn-success">Adicionar novo Cargo</a>
+</p>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                <strong style="font-size: 20px;">Nome</strong>
+            </th>
+            <th>
+                <strong style="font-size: 20px;">Ações</strong>
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in this.Model.Content?.Jobs)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a asp-controller="Companies" asp-action="Details" asp-route-id="@this.Model.Content?.CompanyId">Voltar à página de detalhes da empresa @this.Model.Content.Name.</a>
+</div>

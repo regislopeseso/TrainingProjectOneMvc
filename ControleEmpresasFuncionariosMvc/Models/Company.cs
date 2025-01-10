@@ -1,10 +1,18 @@
-﻿namespace ControleEmpresasFuncionariosMvc.Models
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace ControleEmpresasFuncionariosMvc.Models
 {
     public class Company
     {
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Cnpj { get; set; }
         
+        [DisplayName("Nome")]
+        public string Name { get; set; }
+        public string? Cnpj { get; set; }
+
+        [InverseProperty("Company")]
+        public List<Job> Jobs { get; set; }
+        public int JobsQty { get; set; }
     }
 }

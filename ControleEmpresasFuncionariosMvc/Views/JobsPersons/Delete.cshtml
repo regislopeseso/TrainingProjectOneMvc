@@ -1,0 +1,27 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<JobPersonDeleteDto>
+
+@{
+    ViewData["Title"] = "Demitir FUNCIONÁRIO";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>
+    Tem certeza que deseja demitir a pessoa:
+    <strong>@this.Model.Content?.Person.Name (@this.Model.Content?.Job.Name)</strong>?
+</h3>
+
+<form asp-action="Delete">
+    <input name="JobId" type="hidden" value="@this.Model.Content?.Job.Id" />
+    <input name="PersonId" type="hidden" value="@this.Model.Content?.Person.Id" />
+    <input type="submit" value="Confirmar DEMISSÃO" class="btn btn-outline-danger" />
+</form>
+
+<div>
+    <hr />
+    <a asp-action="Index">Voltar à lista de empresas</a>
+</div>
+
+
+

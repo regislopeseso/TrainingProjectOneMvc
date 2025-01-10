@@ -1,0 +1,23 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<PersonDto>
+
+@{
+    ViewData["Title"] = "Apagar PESSOA";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>
+    Tem certeza que deseja apagar o registro da Pessoa:
+    <strong>@this.Model.Content?.Name  ( Data de nascimento: @this.Model.Content?.BirthDate?.ToString("dd/MM/yyyy") )</strong>?
+</h3>
+
+<form asp-action="Delete">
+    <input type="hidden" value="@this.Model.Content?.Id" />
+    <input type="submit" value="Confirmar APAGAR" class="btn btn-outline-danger" />
+</form>
+
+<div>
+    <hr />
+    <a asp-action="Index">Voltar à lista de pessoas</a>
+</div>
