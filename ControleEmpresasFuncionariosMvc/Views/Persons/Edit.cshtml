@@ -5,8 +5,16 @@
     ViewData["Title"] = "Editar PESSOA";
 }
 
-<h1>@ViewData["Title"]</h1>
+<br />
+
+<div class="alert alert-dismissible alert-warning">
+    <h3>@ViewData["Title"]</h3>
+</div>
+
+<br />
 <hr />
+<br />
+
 <div class="row">
     <div class="col-md-10">
         <form action="Edit" method="post">
@@ -22,21 +30,22 @@
                 <input type="text" name="Name" class="control-label input-large" value="@this.Model.Content?.Name" />
             </div>
 
-
+            <br />
             <div class="form-group">
                 <label id="BirthDate">Se necessário, corrija a data de nascimento.</label>
                 <input type="date" name="BirthDate" class="control-label input-large" value="@this.Model.Content?.BirthDate?.ToString("yyyy-MM-dd")" />
             </div>
 
-
+            <br />
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-outline-success" />
+                <input type="submit" value="Salvar" class="btn btn-outline-warning" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
+    <br />
     <hr />
     <a asp-action="Index">Voltar à lista de pessoas</a>
 </div>

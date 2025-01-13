@@ -5,19 +5,27 @@
     ViewData["Title"] = "Apagar CARGO";
 }
 
-<h1>@ViewData["Title"]</h1>
+<br />
 
-<h3>
-    Tem certeza que deseja apagar o cargo:
-    <strong>@this.Model.Content?.Name </strong>?
-</h3>
+<div class="alert alert-dismissible alert-danger text-center">
+    <h2>@ViewData["Title"]</h2>
+</div>
 
-<form asp-action="Delete">
-    <input type="hidden" value="@this.Model.Content?.Id" />
-    <input type="hidden" name="CompanyId" value="@this.Model.Content?.CompanyId" />
+<hr />
 
-    <input type="submit" value="Confirmar APAGAR" class="btn btn-outline-danger" />
-</form>
+<div class="row alert alert-dismissible alert-primary text-center">
+    <h4>
+        Tem certeza que deseja apagar
+        <strong>@this.Model.Content?.Name </strong>?
+    </h4>
+
+    <form asp-action="Delete">
+        <input type="hidden" value="@this.Model.Content?.Id" />
+        <input type="hidden" name="CompanyId" value="@this.Model.Content?.CompanyId" />
+
+        <input type="submit" value="Confirmar APAGAR" class="btn btn-outline-danger" />
+    </form>
+</div>
 
 <div>
     <hr />

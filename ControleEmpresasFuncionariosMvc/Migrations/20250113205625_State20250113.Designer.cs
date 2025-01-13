@@ -4,6 +4,7 @@ using ControleEmpresasFuncionariosMvc.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleEmpresasFuncionariosMvc.Migrations
 {
     [DbContext(typeof(ControleEmpresasFuncionariosMvcContext))]
-    partial class ControleEmpresasFuncionariosMvcContextModelSnapshot : ModelSnapshot
+    [Migration("20250113205625_State20250113")]
+    partial class State20250113
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

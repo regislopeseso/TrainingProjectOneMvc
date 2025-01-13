@@ -5,63 +5,77 @@
     ViewData["Title"] = "Detalhes da PESSOA";
 }
 
-<h1>@ViewData["Title"]</h1>
+<br />
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @this.Model.Content?.Name
-        </dt>
-    </dl>
-
-    <br />
-
-    <dl class="row">
-        <dt class="col-sm-2">
-            Data de Nascimento: @this.Model.Content?.BirthDate?.ToString("d")
-        </dt>
-    </dl>
-
-    <br />
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Empresa
-                </th>
-                <th>
-                    Cargo
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>
-                    Não implementado
-                </td>
-                <td>
-                    Não implementado
-                </td>
-            </tr>        
-        </tbody>
-    </table>
-
-    <br />
-
+<div class="alert alert-dismissible alert-info">
+    <h3>@ViewData["Title"]</h3>
 </div>
 
 <br />
-<div>
-
-    <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
-    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
-
-</div>
+<hr />
 <br />
+
+<div class="alert alert-dismissible alert-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <dl>
+                    <dt>
+                        <br />
+                        Nome:
+                        <br />
+                        @this.Model.Content?.Name
+                    </dt>
+                </dl>
+
+                <dl>
+                    <dt>
+                        Data de Nascimento:
+                        <br />
+                        @this.Model.Content?.BirthDate?.ToString("d")
+                    </dt>
+                </dl>
+            </div>
+
+            <div class="col-md-9 align-content-center border-start border-light ps-4">
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
+            </div>
+            <br />
+        </div>
+    </div>
+
+    <br />
+
+    <div class="alert alert-dismissible alert-secondary">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Cargo 
+                    </th>
+                    <th>
+                        Empresa
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        Não implementado
+                    </td>
+                    <td>
+                        Não implementado
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
 <div>
+    <br />
     <hr />
     <a asp-action="Index">Voltar à lista de empresas</a>
 </div>

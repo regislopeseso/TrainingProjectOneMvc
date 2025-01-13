@@ -1,43 +1,60 @@
 ﻿@using ControleEmpresasFuncionariosMvc.Dtos
 @model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<CompanyDetailsDto>
 
-
 @{
     ViewData["Title"] = "Detalhes da EMPRESA";
 }
 
-<h1>@ViewData["Title"]</h1>
+<br />
 
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @this.Model.Content?.Name
-        </dt>
-    </dl>
-    <br />
-    <dl class="row">
-        <dt class="col-sm-2">
-            CNPJ: @this.Model.Content?.Cnpj
-        </dt>
-    </dl>
+<div class="alert alert-dismissible alert-info">
+    <h3>@ViewData["Title"]</h3>
 </div>
 
 <br />
-<div>
-    <a class="btn btn-success" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
-    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
+<hr />
+<br />
+
+<div class="alert alert-dismissible alert-primary">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <dl>
+                    <dt>
+                        <br />
+                        Nome:
+                        <br />
+                        @this.Model.Content?.Name
+                    </dt>
+                </dl>
+
+                <br />
+                <dl>
+                    <dt>
+                        CNPJ:
+                        <br />
+                        @this.Model.Content?.Cnpj
+                    </dt>
+                </dl>
+            </div>
+
+            <div class="col-md-9 align-content-center border-start border-light ps-4">
+                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
+            </div>
+        </div>
+    </div>
+
+    <br />
+
+    <div class="alert alert-dismissible alert-secondary">
+        <a class="btn btn-outline-dark" asp-controller="Jobs" asp-action="Index" asp-route-companyId="@this.Model.Content?.Id">Cargos <strong>(@this.Model.Content?.JobsQty)</strong></a> |
+        <a class="btn btn-outline-dark" asp-controller="JobsPersons" asp-action="Index" asp-route-companyId="@this.Model.Content?.Id">Funcionários <strong>(@this.Model.Content?.WorkersQty)</strong></a>
+    </div>
 </div>
 
 <div>
-    <hr />
-    <a class="btn btn-outline-dark" asp-controller="Jobs" asp-action="Index" asp-route-companyId="@this.Model.Content?.Id">Cargos <strong>(@this.Model.Content?.JobsQty)</strong></a> |
-    <a class="btn btn-outline-dark" asp-controller="JobsPersons" asp-action="Index" asp-route-companyId="@this.Model.Content?.Id">Funcionários <strong>(35)</strong></a>
-</div>
-
-
-
-<div>
+    <br />
     <hr />
     <a asp-action="Index">Voltar à lista de empresas</a>
 </div>

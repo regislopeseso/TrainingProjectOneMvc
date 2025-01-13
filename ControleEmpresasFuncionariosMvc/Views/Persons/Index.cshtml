@@ -5,7 +5,7 @@
     ViewData["Title"] = "PESSOAS";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     <a asp-action="Create" class="btn btn-success">Adicionar nova Pessoa</a>
@@ -41,8 +41,8 @@
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a class="btn btn-outline-info" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                        <a class="btn btn-outline-success" asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                        <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                        <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
                         <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
                     </td>
                 </tr>

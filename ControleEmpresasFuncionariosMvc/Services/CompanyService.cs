@@ -72,9 +72,9 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 return (false, "Formato incorreto! O formato correto é: 00.000.000/0000-00");
             }
 
-            if (await _context.Company.AnyAsync(a => a.Name == company.Name) == true)
+            if (await _context.Company.AnyAsync(a => a.Cnpj == company.Cnpj) == true)
             {
-                return (false, "Já existe uma empresa com este nome!");
+                return (false, "Já existe uma empresa com este CNPJ!");
             }
 
             return (true, string.Empty);
@@ -130,20 +130,33 @@ namespace ControleEmpresasFuncionariosMvc.Services
             }
 
             var company = await _context.Company
-                .Where(c => c.Id == id)
-                .Select(x => new CompanyDetailsDto
+                .Where(a => a.Id == id)
+                .Select(a => new CompanyDetailsDto
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    Cnpj = x.Cnpj,
-                    Jobs = x.Jobs.Select(a => new JobDto
-                    {
-                        Id = a.Id,
-                        Name = a.Name,
-                    }).ToList(),
-                    JobsQty = x.Jobs.Count(),
+                    Id = a.Id,
+                    Name = a.Name,
+                    Cnpj = a.Cnpj,
+                    JobsQty = a.Jobs.Count,
+                    WorkersQty = a.Jobs.SelectMany(b => b.Persons).Count(),
                 })
                 .FirstOrDefaultAsync();
+
+            //A operação acima poderia também ser feita como o exemplo abaixo, onde cria-se com o Select uma lista contendo a quantidade de pessoas que está registrada em cada cargo e no fim soma essas quantidades.
+            //var company = await _context.Company
+            //    .Where(a => a.Id == id)
+            //    .Select(a => new CompanyDetailsDto
+            //    {
+            //        Id = a.Id,
+            //        Name = a.Name,
+            //        Cnpj = a.Cnpj,
+            //        JobsQty = a.Jobs.Count,
+            //        WorkersQty = a.Jobs.Select(b => b.Persons.Count).Sum(),
+
+            //        })
+            //    .FirstOrDefaultAsync();
+
+
+
 
             if (company == null)
             {

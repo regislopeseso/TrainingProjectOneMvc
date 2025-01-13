@@ -5,31 +5,44 @@
     ViewData["Title"] = "Adicionar EMPRESA";
 }
 
-<h1>@ViewData["Title"]</h1>
+<br />
+
+<div class="alert alert-dismissible alert-success">
+    <h3>@ViewData["Title"]</h3>
+</div>
 
 <hr />
-<div class="row">
+
+<div class="row alert alert-dismissible alert-primary">
     <div class="col-md-10">
         <form action="Create" method="post">
 
-            @if (string.IsNullOrEmpty(this.Model.Message) == false) {
+            @if (string.IsNullOrEmpty(this.Model.Message) == false)
+            {
                 <div class="text-danger">@(this.Model.Message)</div>
             }
+
+            <br />
+
             <div class="form-group">
                 <label id="Name">Nome da Empresa</label>
                 <input type="text" name="Name" class="control-label input-large" value="@this.Model.Content?.Name" />
             </div>
 
-           
+            <br />
+
             <div class="form-group">
                 <label id="Cnpj">CNPJ (00.000.000/0000-00)</label>
                 <input type="text" name="Cnpj" class="control-label input-short" value="@this.Model.Content?.Cnpj" />
             </div>
 
+            <br />
 
             <div class="form-group">
                 <input type="submit" value="Concluir" class="btn btn-success" />
             </div>
+
+            <br />
         </form>
     </div>
 </div>

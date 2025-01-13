@@ -45,7 +45,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         #region Create
         public async Task<(PersonDto, string)> CreateAsync(PersonDto person)
         {
-            var (isValid, message) = await this.PersonIsValidAsync(person);
+            var (isValid, message) = this.PersonIsValid(person);
 
             if (isValid == false)
             {
@@ -63,7 +63,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (person, message);
         }
-        private async Task<(bool, string)> PersonIsValidAsync(PersonDto person)
+        private  (bool, string) PersonIsValid(PersonDto person)
         {
             if (person == null)
             {

@@ -5,10 +5,15 @@
     ViewData["Title"] = "Adicionar PESSOA";
 }
 
-<h1>@ViewData["Title"]</h1>
+<br />
+
+<div class="alert alert-dismissible alert-success">
+    <h3>@ViewData["Title"]</h3>
+</div>
 
 <hr />
-<div class="row">
+
+<div class="row alert alert-dismissible alert-primary">
     <div class="col-md-10">
         <form action="Create" method="post">
 
@@ -16,21 +21,28 @@
             {
                 <div class="text-danger">@(this.Model.Message)</div>
             }
+
+            <br />
+
             <div class="form-group">
                 <label id="Name">Nome</label>
                 <input type="text" name="Name" class="control-label input-large" value="@this.Model.Content?.Name" />
             </div>
 
+            <br />
 
             <div class="form-group">
                 <label id="BirthDate">Data de Nascimento (dd/MM/aaaa)</label>
                 <input type="date" name="BirthDate" class="control-label input-short" value="@this.Model.Content?.BirthDate" />
             </div>
 
+            <br />
 
             <div class="form-group">
                 <input type="submit" value="Concluir" class="btn btn-success" />
             </div>
+
+            <br />
         </form>
     </div>
 </div>

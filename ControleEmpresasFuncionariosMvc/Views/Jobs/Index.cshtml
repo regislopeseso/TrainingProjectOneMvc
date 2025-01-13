@@ -16,10 +16,10 @@
     <thead>
         <tr>
             <th>
-                <strong style="font-size: 20px;">Nome</strong>
+                <light style="font-size: 20px;">Nome</light>
             </th>
             <th>
-                <strong style="font-size: 20px;">Ações</strong>
+                <light style="font-size: 20px;">Ações</light>
             </th>
             <th></th>
         </tr>
@@ -32,7 +32,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    <a class="btn btn-outline-success" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
                     <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
                 </td>
             </tr>
@@ -41,5 +41,6 @@
 </table>
 
 <div>
+    <hr />  
     <a asp-controller="Companies" asp-action="Details" asp-route-id="@this.Model.Content?.CompanyId">Voltar à página de detalhes da empresa @this.Model.Content.Name.</a>
 </div>

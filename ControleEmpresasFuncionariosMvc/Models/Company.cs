@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using ControleEmpresasFuncionariosMvc.Dtos;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ControleEmpresasFuncionariosMvc.Models
@@ -13,6 +14,5 @@ namespace ControleEmpresasFuncionariosMvc.Models
 
         [InverseProperty("Company")]
         public List<Job> Jobs { get; set; }
-        public int JobsQty { get; set; }
     }
 }

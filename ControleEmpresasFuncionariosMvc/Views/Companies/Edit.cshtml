@@ -5,8 +5,16 @@
     ViewData["Title"] = "Editar EMPRESA";
 }
 
-<h1>@ViewData["Title"]</h1>
+<br />
+
+<div class="alert alert-dismissible alert-warning">
+    <h3>@ViewData["Title"]</h3>
+</div>
+
+<br />
 <hr />
+<br />
+
 <div class="row">
     <div class="col-md-10">
         <form action="Edit" method="post">
@@ -22,21 +30,22 @@
                 <input type="text" name="Name" class="control-label input-large" value="@this.Model.Content?.Name" />
             </div>
 
-
+            <br />
             <div class="form-group">
                 <label id="Cnpj">Se desejado, insira o novo CNPJ (00.000.000/0000-00)</label>
                 <input type="text" name="Cnpj" class="control-label input-short" value="@this.Model.Content?.Cnpj" />
             </div>
 
-
+            <br />
             <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-outline-success" />
+                <input type="submit" value="Salvar" class="btn btn-outline-warning" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
+    <br />
     <hr />
     <a asp-action="Index">Voltar à lista de empresas</a>
 </div>

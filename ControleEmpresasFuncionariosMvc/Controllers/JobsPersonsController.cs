@@ -4,6 +4,7 @@ using ControleEmpresasFuncionariosMvc.Models;
 using ControleEmpresasFuncionariosMvc.Models.ViewModels;
 using ControleEmpresasFuncionariosMvc.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.Design;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
@@ -20,7 +21,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         {
             var result = await _jobPersonService.FindAllAsync(companyId);
 
-            var response = new ResponseViewModel<List<JobPersonIndexDto>>()
+            var response = new ResponseViewModel<JobPersonIndexDto>()
             {
                 Content = result
             };
@@ -32,7 +33,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         //Get
         public async Task<IActionResult> Create(int companyId)
         {
-                var persons = await _personService.FindPersonsAsync();
+            var persons = await _personService.FindPersonsAsync();
             var jobs = await _jobService.FindJobsAsync(companyId);
 
             var response = new ResponseViewModel<JobsPersonsDto>()
@@ -52,20 +53,28 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(JobPersonDto jobPerson)
         {
-            var (result, message) = await _jobPersonService.CreateAsync(jobPerson);
+            var (isValid, message) = await _jobPersonService.CreateAsync(jobPerson);
 
-            var response = new ResponseViewModel<bool>()
+            if (isValid == false)
             {
-                Content = result,
-                Message = message,
-            };
+                var persons = await _personService.FindPersonsAsync();
+                var jobs = await _jobService.FindJobsAsync(jobPerson.CompanyId);
 
-            if (string.IsNullOrWhiteSpace(response.Message) == false)
-            {
+                var response = new ResponseViewModel<JobsPersonsDto>()
+                {
+                    Content = new JobsPersonsDto()
+                    {
+                        CompanyId = jobPerson.CompanyId,
+                        Jobs = jobs,
+                        Persons = persons,
+                    },
+                    Message = message
+                };
+
                 return View(response);
             }
 
-            return RedirectToAction("Details", "Companies", new { id = jobPerson.CompanyId });
+            return RedirectToAction("Index", "JobsPersons", new { companyId = jobPerson.CompanyId });
         }
         #endregion
 
@@ -78,7 +87,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
             var response = new ResponseViewModel<JobPersonDeleteDto>()
             {
 
-                Content = result,                
+                Content = result,
                 Message = message
             };
 

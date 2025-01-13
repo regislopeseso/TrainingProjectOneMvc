@@ -2,6 +2,7 @@
 using ControleEmpresasFuncionariosMvc.Dtos;
 using ControleEmpresasFuncionariosMvc.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Cryptography.Xml;
 using System.Text.RegularExpressions;
 
 namespace ControleEmpresasFuncionariosMvc.Services
@@ -14,40 +15,56 @@ namespace ControleEmpresasFuncionariosMvc.Services
         {
             this._context = context;
         }
-        public async Task<List<JobPersonIndexDto>> FindAllAsync(int companyId)
+        public async Task<JobPersonIndexDto?> FindAllAsync(int companyId)
         {
-            return await _context.Job
-                .Where(a => a.Company.Id == companyId)
+            return await _context.Company
+                .Where(a => a.Id == companyId)
                 .Select(a => new JobPersonIndexDto
                 {
-                    Job = new JobDto
-                    {
-                        Id = a.Id,
-                        Name = a.Name,
-                        CompanyId = a.Company.Id,
-                    },
+                    CompanyId = companyId,
+                    CompanyName = a.Name,
 
-                    Persons = a.Persons.Select(p => new PersonDto
-                    {
-                        Id = p.Id,
-                        Name = p.Name,
-                    }).OrderBy(c => c.Name).ToList(),
+                    JobPersons = a.Jobs
+                        .Select(b => new JobPersonsDto
+                        {
+                            Job = new JobDto
+                            {
+                                Id = b.Id,
+                                Name = b.Name,
+                                CompanyId = b.Company.Id,
+                            },
 
+                            Persons = b.Persons
+                                 .Select(c => new PersonDto
+                                 {
+                                     Id = c.Id,
+                                     Name = c.Name,
+                                 })
+                                 .OrderBy(c => c.Name)
+                                 .ToList()
+                        })
+                        .OrderBy(a => a.Job.Name)
+                        .ToList()
                 })
-                .OrderBy(c => c.Job.Name)
-                .ToListAsync();
+                .FirstOrDefaultAsync();       
         }
 
 
         #region CREATE
-        public async Task<(bool, string)> CreateAsync(JobPersonDto jobPersonDto)
+        public async Task<(bool, string)> CreateAsync(JobPersonDto jobPerson)
         {
+            var (isValid, message) = this.WorkerIsValid(jobPerson);
+
+            if (isValid == false)
+            {
+                return (false, message);
+            }
             var person = await _context.Person
                 .Include(a => a.Jobs)
-                .Where(a => a.Id == jobPersonDto.PersonId)
+                .Where(a => a.Id == jobPerson.PersonId)
                 .FirstOrDefaultAsync();
 
-            var job = await _context.Job.FindAsync(jobPersonDto.JobId);
+            var job = await _context.Job.FindAsync(jobPerson.JobId);
 
             if (person == null || job == null)
             {
@@ -60,6 +77,37 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (true, string.Empty);
         }
+
+
+
+        private (bool, string) WorkerIsValid(JobPersonDto jobPerson)
+        {
+            if (jobPerson == null)
+            {
+                return (false, "É necessário informar os dados do funcionário a ser cadastrado.");
+            }
+
+            if (jobPerson.PersonId == null && jobPerson.JobId == null)
+            {
+                return (false, "É necessário informar os dados do funcionário a ser cadastrado.");
+            }
+
+            if (jobPerson.PersonId == null)
+            {
+                return (false, "É necessário informar uma pessoa.");
+            }
+
+            if (jobPerson.JobId == null)
+            {
+                return (false, "É necessário informar um cargo.");
+            }
+
+
+            return (true, string.Empty);
+        }
+
+
+
         #endregion
 
         #region Delete
@@ -77,6 +125,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 {
                     Id = a.Id,
                     Name = a.Name,
+                    CompanyId = a.Company.Id,
                 })
                 .FirstOrDefaultAsync();
 
