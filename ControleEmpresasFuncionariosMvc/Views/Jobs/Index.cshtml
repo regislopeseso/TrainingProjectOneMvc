@@ -1,46 +1,71 @@
 ﻿@using ControleEmpresasFuncionariosMvc.Dtos
 @model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<CompanyJobsDto>
 
-@{
-    ViewData["Title"] = "CARGOS";
-}
+<div class="width-style1">
+    @{
+        ViewData["Title"] = "CARGOS";
+    }
 
-<h2>@ViewData["Title"]</h2>
+    <h2>@ViewData["Title"]</h2>
 
-<p>
-    <a asp-action="Create" asp-route-companyId="@this.Model.Content?.CompanyId" class="btn btn-success">Adicionar novo Cargo</a>
-</p>
+    <p>
+        <a asp-action="Create" asp-route-companyId="@this.Model.Content?.CompanyId" class="btn btn-success">Adicionar novo Cargo</a>
+    </p>
 
+    @if (this.Model.Content == null || this.Model.Content.Jobs.Count <= 0)
+    {
+        <div class="alert alert-dismissible alert-primary width-style5">
+            Nenhuma cargo a ser exibido.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-dismissible alert-primary width-style1">
+            <table class="table table-hover table-secondary text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="text-start ps-4">
+                                <strong style="font-size: 20px;">Nome</strong>
+                            </div>
+                        </th>
+                        <th style="width: 400px;">
+                            <div class="text-center">
+                                <light style="font-size: 20px;">Ações</light>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in this.Model.Content?.Jobs)
+                    {
+                        <tr>
+                            <td>
+                                <div class="text-start ps-4">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <light style="font-size: 20px;">Nome</light>
-            </th>
-            <th>
-                <light style="font-size: 20px;">Ações</light>
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in this.Model.Content?.Jobs)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+    <hr class="custom-hr w-100" />
 
-<div>
-    <hr />  
-    <a asp-controller="Companies" asp-action="Details" asp-route-id="@this.Model.Content?.CompanyId">Voltar à página de detalhes da empresa @this.Model.Content.Name.</a>
+    <div class="d-flex align-items-center" style="margin-left: 0%; width: 50%;">
+        <a type="button" class="btn btn-outline-primary"
+           asp-controller="Companies"
+           asp-action="Details"
+           asp-route-id="@this.Model.Content?.CompanyId">
+            <i class="bi bi-arrow-left"></i> Voltar à página de detalhes da empresa @this.Model.Content.Name.
+        </a>
+    </div>
 </div>

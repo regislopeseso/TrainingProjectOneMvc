@@ -27,6 +27,11 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 .ToListAsync();
         }
 
+        public async Task<int> CountAsync()
+        {
+            return await _context.Company.CountAsync();
+        }
+
         #region Create
         public async Task<(CompanyDto, string)> CreateAsync(CompanyDto company)
         {

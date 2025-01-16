@@ -7,54 +7,94 @@
 
 <br />
 
-<div class="alert alert-dismissible alert-info">
-    <h3>@ViewData["Title"]</h3>
+<div class="d-flex justify-content-center">
+    <div class="alert alert-dismissible alert-info">
+        <h3>@ViewData["Title"]</h3>
+    </div>
 </div>
 
-<br />
-<hr />
-<br />
+<hr class="custom-hr" />
 
-<div class="alert alert-dismissible alert-primary">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <dl>
-                    <dt>
-                        <br />
-                        Nome:
-                        <br />
-                        @this.Model.Content?.Name
-                    </dt>
-                </dl>
 
-                <br />
-                <dl>
-                    <dt>
-                        CNPJ:
-                        <br />
-                        @this.Model.Content?.Cnpj
-                    </dt>
-                </dl>
-            </div>
+<div class="row justify-content-center">
+    <div class="alert alert-dismissible alert-primary width-style3">
+        <div class="container">
+            <div class="row">
 
-            <div class="col-md-9 align-content-center border-start border-light ps-4">
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="d-flex align-items-center" style="position: relative; width: 80%;">
+
+                        <div class="text-start" style="width: 50%;">
+                            <div class="text-start">
+                                <div class="alert alert-dismissible alert-secondary width-style4">
+                                    <dl>
+                                        <dt>
+                                            <br />
+                                            Nome:
+                                            <br />
+                                            <strong>@this.Model.Content?.Name</strong>
+                                        </dt>
+                                    </dl>
+                                </div>
+
+                                <br />
+
+                                <div class="alert alert-dismissible alert-secondary width-style4">
+                                    <dl>
+                                        <dt>
+                                            CNPJ:
+                                            <br />
+                                            <strong>@this.Model.Content?.Cnpj</strong>                                            
+                                        </dt>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div style="width: 1px; background: #000 ; height: 100%; position: absolute; left: 50%;"></div>
+
+                        <!-- Right content -->
+                        <div class="text-center" style="width: 50%;">
+                            <div class="align-content-center">
+                                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a>
+                                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <br />
+        <br />
 
-    <div class="alert alert-dismissible alert-secondary">
-        <a class="btn btn-outline-dark" asp-controller="Jobs" asp-action="Index" asp-route-companyId="@this.Model.Content?.Id">Cargos <strong>(@this.Model.Content?.JobsQty)</strong></a> |
-        <a class="btn btn-outline-dark" asp-controller="JobsPersons" asp-action="Index" asp-route-companyId="@this.Model.Content?.Id">Funcionários <strong>(@this.Model.Content?.WorkersQty)</strong></a>
+        <div class="d-flex justify-content-center">
+            <div class="alert alert-dismissible2 alert-secondary">
+                <a class="btn btn-outline-dark"
+                   asp-controller="Jobs"
+                   asp-action="Index"
+                   asp-route-companyId="@this.Model.Content?.Id">
+                    Cargos <strong>(@this.Model.Content?.JobsQty)</strong>
+                </a> &
+                <a class="btn btn-outline-dark"
+                   asp-controller="JobsPersons"
+                   asp-action="Index"
+                   asp-route-companyId="@this.Model.Content?.Id">
+                    Funcionários <strong>(@this.Model.Content?.WorkersQty)</strong>
+                </a>
+            </div>
+        </div>
+
     </div>
 </div>
 
-<div>
-    <br />
-    <hr />
-    <a asp-action="Index">Voltar à lista de empresas</a>
+<hr class="custom-hr" />
+
+<div class="d-flex align-items-center" style="margin-left: 25%; width: 50%;">
+    <a type="button" class="btn btn-outline-primary"
+       asp-action="Index">
+        <i class="bi bi-arrow-left">
+        </i> Voltar à lista de empresas
+    </a>
 </div>

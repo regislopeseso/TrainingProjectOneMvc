@@ -39,7 +39,12 @@ namespace ControleEmpresasFuncionariosMvc.Services
                     Name = a.Name,
                 })
                 .ToListAsync();
-        }     
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.Person.CountAsync();
+        }
         #endregion
 
         #region Create

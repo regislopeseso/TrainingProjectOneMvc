@@ -7,15 +7,17 @@
 
 <br />
 
-<div class="alert alert-dismissible alert-danger text-center">
+<div class="alert alert-dismissible alert-danger text-center width-style1">
     <h2>@ViewData["Title"]</h2>
 </div>
 
-<hr />
+<hr class="custom-hr w-100" />
+
 
 <div class="row alert alert-dismissible alert-primary text-center">
     <h4>
         Tem certeza que deseja apagar
+        <br />
         <strong>@this.Model.Content?.Name </strong>?
     </h4>
 
@@ -23,11 +25,16 @@
         <input type="hidden" value="@this.Model.Content?.Id" />
         <input type="hidden" name="CompanyId" value="@this.Model.Content?.CompanyId" />
 
-        <input type="submit" value="Confirmar APAGAR" class="btn btn-outline-danger" />
+        <input type="submit" value="Confirmar APAGAR" class="btn btn-outline-danger btn-lg" />
     </form>
 </div>
 
-<div>
-    <hr />
-    <a asp-action="Index" asp-route-companyId="@this.Model.Content?.CompanyId">Voltar à lista de cargos da empresa.</a>
+<hr class="custom-hr w-100" />
+
+<div>    
+    <a type="button" class="btn btn-outline-primary"
+        asp-action="Index" 
+        asp-route-companyId="@this.Model.Content?.CompanyId"> 
+        <i class="bi bi-arrow-left"></i> Voltar à lista de cargos da empresa.
+    </a>
 </div>

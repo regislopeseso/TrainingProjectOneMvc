@@ -66,3 +66,47 @@ h4 {
 h5 {
     font-size: 40px;
 }
+
+.width-style1 {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.width-style2 {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.width-style3 {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.width-style4 {
+    width: fit-content;
+    margin-top: 10px;
+    margin-left: -50px;
+}
+
+.width-style5 {
+    width:  fit-content;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+table tr td {
+    align-content: center;
+}
+
+.custom-hr {
+    width: 50%; /* Adjust the length */
+    border: 2px solid #000; /* Line thickness and color */
+    margin: 20px auto; /* Center it horizontally */
+}
+
+.alert-dismissible2 {
+    padding-right: 1em;
+}

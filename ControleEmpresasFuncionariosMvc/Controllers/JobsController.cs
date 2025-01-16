@@ -9,9 +9,8 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
-    public class JobsController(ControleEmpresasFuncionariosMvcContext context, JobService jobService) : Controller
+    public class JobsController(JobService jobService) : Controller
     {
-        private readonly ControleEmpresasFuncionariosMvcContext _context = context;
         private readonly JobService _jobService = jobService;
    
 

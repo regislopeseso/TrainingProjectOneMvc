@@ -68,7 +68,7 @@
 
 <div>
     <hr />
-    <a asp-action="Index" asp-route-companyId="@this.Model.Content?.CompanyId">Voltar à lista de cargos de funcionários da empresa.</a>
+    <a type="button" class="btn btn-outline-primary" asp-action="Index" asp-route-companyId="@this.Model.Content?.CompanyId"> <i class="bi bi-arrow-left"></i> Voltar à lista de funcionários da empresa.</a>
 </div>
 
 @section Scripts {

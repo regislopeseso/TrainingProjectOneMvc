@@ -1,22 +1,32 @@
 using System.Diagnostics;
+using ControleEmpresasFuncionariosMvc.Dtos;
+using ControleEmpresasFuncionariosMvc.Data;
 using ControleEmpresasFuncionariosMvc.Models.ViewModels;
+using ControleEmpresasFuncionariosMvc.Services;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController(CompanyService companyService, JobService jobService, PersonService personService) : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly CompanyService _companyService = companyService;
+        private readonly JobService _jobService = jobService;
+        private readonly PersonService _personService = personService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public async Task<IActionResult> Index()
         {
-            _logger = logger;
-        }
+            var response = new ResponseViewModel<CompaniesJobsPersonsHomeDto>()
+            {
+                Content = new CompaniesJobsPersonsHomeDto
+                {
+                    CountCompanies = await _companyService.CountAsync(),
+                    CountJobs = await _jobService.CountAsync(),
+                    CountPersons = await _personService.CountAsync(),
+                }
+            };
 
-        public IActionResult Index()
-        {
-            return View();
+            return View(response);
         }        
     }     
 }

@@ -1,4 +1,8 @@
-﻿@{
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<CompaniesJobsPersonsHomeDto>
+
+
+@{
     ViewData["Title"] = "Página Inicial";
 }
 
@@ -6,6 +10,29 @@
     <br />
     <br />
     <br />
-    <h1 class="display-1">Projeto:</h1>
+    <h1 class="display-1">Protótipo:</h1>
     <h2><strong>Controle Empresas, Cargos, Pessoas e Funcionários</strong></h2>
+
+    <br />
+    <br />
+
+    <div class="alert alert-dismissible alert-secondary width-style2">
+        <div class="text-center">
+            <hr class="custom-hr w-100" />
+            <h3>Overview</h3>
+            <div class="text-lg-start">
+                <br />
+                <h5>Empresas(@this.Model.Content.CountCompanies)</h5>
+                <br />
+                <h5>Cargos(@this.Model.Content.CountJobs)</h5>
+                <br />
+                <h5>Pessoas(@this.Model.Content.CountPersons)</h5>
+            </div>
+            <hr class="custom-hr w-100" />
+        </div>
+    </div>
+
+
+
+
 </div>

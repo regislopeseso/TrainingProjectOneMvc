@@ -7,9 +7,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
-    public class PersonsController(ControleEmpresasFuncionariosMvcContext context, PersonService personService) : Controller
+    public class PersonsController(PersonService personService) : Controller
     {
-        private readonly ControleEmpresasFuncionariosMvcContext _context = context;
         private readonly PersonService _personService = personService;
 
         #region GET: Persons

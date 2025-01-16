@@ -7,75 +7,87 @@
 
 <br />
 
-<div class="alert alert-dismissible alert-info">
-    <h3>@ViewData["Title"]</h3>
+<div class="d-flex justify-content-center">
+    <div class="alert alert-dismissible alert-info">
+        <h3>@ViewData["Title"]</h3>
+    </div>
 </div>
 
-<br />
-<hr />
-<br />
+<hr class="custom-hr" />
 
-<div class="alert alert-dismissible alert-primary">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-3">
-                <dl>
-                    <dt>
-                        <br />
-                        Nome:
-                        <br />
-                        @this.Model.Content?.Name
-                    </dt>
-                </dl>
+<div class="row justify-content-center">
+    <div class="alert alert-dismissible alert-primary width-style3">
+        <div class="container">
+            <div class="row">
 
-                <dl>
-                    <dt>
-                        Data de Nascimento:
-                        <br />
-                        @this.Model.Content?.BirthDate?.ToString("d")
-                    </dt>
-                </dl>
+                <div class="d-flex justify-content-center align-items-center">
+                    <div class="d-flex align-items-center" style="position: relative; width: 80%;">
+                        <div class="text-start" style="width: 50%;">
+                            <div class="text-start">
+                                <dl>
+                                    <dt>
+                                        <br />
+                                        Nome:
+                                        <br />
+                                        <strong>@this.Model.Content?.Name</strong>
+                                    </dt>
+                                </dl>
+
+                                <dl>
+                                    <dt>
+                                        Data de Nascimento:
+                                        <br />
+                                        <strong>@this.Model.Content?.BirthDate?.ToString("d")</strong>
+                                    </dt>
+                                </dl>
+                            </div>
+                        </div>
+
+                        <div style="width: 1px; background: #000 ; height: 100%; position: absolute; left: 50%;"></div>
+
+                        <div class="text-center" style="width: 50%;">
+                            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
+                            <a class="btn btn-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
+                        </div>
+                    </div>
+                </div>
             </div>
+        </div>
 
-            <div class="col-md-9 align-content-center border-start border-light ps-4">
-                <a class="btn btn-warning" asp-action="Edit" asp-route-id="@this.Model.Content?.Id">Edit</a> |
-                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@this.Model.Content?.Id">Delete</a>
-            </div>
-            <br />
+        <br />
+
+        <div class="alert alert-dismissible alert-secondary">
+            <table class="table table-hover table-secondary">
+                <thead>
+                    <tr>
+                        <th>
+                            Cargo
+                        </th>
+                        <th>
+                            Empresa
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            Não implementado
+                        </td>
+                        <td>
+                            Não implementado
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
-
-    <br />
-
-    <div class="alert alert-dismissible alert-secondary">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        Cargo 
-                    </th>
-                    <th>
-                        Empresa
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        Não implementado
-                    </td>
-                    <td>
-                        Não implementado
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
 </div>
 
-<div>
-    <br />
-    <hr />
-    <a asp-action="Index">Voltar à lista de empresas</a>
+<hr class="custom-hr" />
+
+<div class="d-flex align-items-center" style="margin-left: 25%; width: 50%;">
+    <a type="button" class="btn btn-outline-primary"
+       asp-action="Index">
+        <i class="bi bi-arrow-left"></i> Voltar à lista de pessoas
+    </a>
 </div>

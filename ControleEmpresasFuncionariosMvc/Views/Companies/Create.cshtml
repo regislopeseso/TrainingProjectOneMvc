@@ -7,14 +7,16 @@
 
 <br />
 
-<div class="alert alert-dismissible alert-success">
-    <h3>@ViewData["Title"]</h3>
+<div class="d-flex justify-content-center">
+    <div class="alert alert-dismissible alert-success text-center">
+        <h3>@ViewData["Title"]</h3>
+    </div>
 </div>
 
-<hr />
+<hr class="custom-hr" />
 
-<div class="row alert alert-dismissible alert-primary">
-    <div class="col-md-10">
+<div class="row justify-content-center">
+    <div class="alert alert-dismissible alert-primary width-style2">
         <form action="Create" method="post">
 
             @if (string.IsNullOrEmpty(this.Model.Message) == false)
@@ -38,7 +40,7 @@
 
             <br />
 
-            <div class="form-group">
+            <div class="form-group text-center">
                 <input type="submit" value="Concluir" class="btn btn-success" />
             </div>
 
@@ -47,13 +49,12 @@
     </div>
 </div>
 
-<div>
-    <hr />
-    <a asp-action="Index">Voltar à lista de empresas</a>
-</div>
 
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
+<hr class="custom-hr" />
+
+<div class="d-flex align-items-center" style="margin-left: 25%; width: 50%;">
+    <a type="button" class="btn btn-outline-primary"
+       asp-action="Index">
+        <i class="bi bi-arrow-left"></i> Voltar à lista de empresas
+    </a>
+</div>

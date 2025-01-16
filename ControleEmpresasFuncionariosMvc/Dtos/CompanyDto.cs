@@ -1,4 +1,6 @@
-﻿namespace ControleEmpresasFuncionariosMvc.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace ControleEmpresasFuncionariosMvc.Dtos
 {
     public class CompanyDto
     {

@@ -1,52 +1,75 @@
 ﻿@using ControleEmpresasFuncionariosMvc.Dtos
 @model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<List<PersonDto>>
 
-@{
-    ViewData["Title"] = "PESSOAS";
-}
 
-<h1>@ViewData["Title"]</h1>
+<div class="width-style1">
+    @{
+        ViewData["Title"] = "PESSOAS";
+    }
 
-<p>
-    <a asp-action="Create" class="btn btn-success">Adicionar nova Pessoa</a>
-</p>
+    <h1>@ViewData["Title"]</h1>
+
+    <p>
+        <a asp-action="Create" class="btn btn-success">Adicionar nova Pessoa</a>
+    </p>
 
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <strong style="font-size: 20px;">Nome</strong>
-            </th>
-            <th>
-                <strong style="font-size: 20px;">Ações</strong>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @if (this.Model.Content == null || this.Model.Content.Count <= 0)
-        {
-            <tr>
-                <td colspan="2">
-                    Nenhuma pessoa a ser exibida.
-                </td>
-            </tr>
-        }
-        else
-        {
-            @foreach (var item in this.Model.Content)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        <a class="btn btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                        <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                        <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
-                    </td>
-                </tr>
-            }
-        }
-    </tbody>
-</table>
+    @if (this.Model.Content == null || this.Model.Content.Count <= 0)
+    {
+        <div class="alert alert-dismissible alert-primary width-style2">
+            Nenhuma pessoa a ser exibida.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-dismissible alert-primary width-style1">
+
+            <table class="table table-hover table-secondary text-center">
+                <thead>
+                    <tr>
+                        <th>
+                            <div class="text-start ps-4">
+                                <strong style="font-size: 20px;">Nome</strong>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="text-center">
+                                <strong style="font-size: 20px;">Data de Nascimento</strong>
+                            </div>
+                        </th>
+                        <th style="width: 300px;">
+                            <div class="text-center">
+                                <strong style="font-size: 20px; ">Ações</strong>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in this.Model.Content)
+                    {
+                        <tr>
+                            <td>
+                                <div class="text-start ps-4">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    @Html.DisplayFor(modelItem => item.BirthDate)
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    }
+</div>

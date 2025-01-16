@@ -7,11 +7,11 @@
 
 <br />
 
-<div class="alert alert-dismissible alert-danger text-center">
+<div class="alert alert-dismissible alert-danger text-center width-style1">
     <h2>@ViewData["Title"]</h2>
 </div>
 
-<hr />
+<hr class="custom-hr w-100" />
 
 <div class="row alert alert-dismissible alert-primary text-center">
     <h4>
@@ -22,17 +22,15 @@
 
     <form asp-action="Delete">
         <input type="hidden" value="@this.Model.Content?.Id" />
-        <input type="submit" value="Confirmar APAGAR" class="btn btn-outline-danger" />
+        <input type="submit" value="Confirmar APAGAR" class="btn btn-outline-danger btn-lg" />
     </form>
 </div>
 
+<hr class="custom-hr w-100" />
 
-
-
-
-
-<div>
-    <br />
-    <hr />
-    <a asp-action="Index">Voltar à lista de pessoas</a>
+<div class="d-flex align-items-center" style="margin-left: 25%; width: 50%;">
+    <a type="button" class="btn btn-outline-primary"
+       asp-action="Index">
+        <i class="bi bi-arrow-left"></i> Voltar à lista de pessoas
+    </a>
 </div>

@@ -1,72 +1,90 @@
 ﻿@using ControleEmpresasFuncionariosMvc.Dtos
 @model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<JobPersonIndexDto>
 
-@{
-    ViewData["Title"] = "FUNCIONÁRIOS";
-}
-
-<h4>@ViewData["Title"]</h4>
-
-<p>
-    <a asp-action="Create" asp-route-companyId="@this.Model.Content.CompanyId" class="btn btn-success">Adicionar novo Funcionário</a>
-</p>
-
-<div class="accordion" id="accordionExample">
-    @for (int i = 0; i < this.Model.Content.JobPersons.Count; i++)
-    {
-        var jobPersons = this.Model.Content.JobPersons[i];
-
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@i" aria-expanded="true" aria-controls="collapse-@i">
-                    <light style="font-size: 20px;">@jobPersons.Job.Name</light>                
-                </button>
-            </h2>
-            <div id="collapse-@i" class="accordion-collapse collapse show" aria-labelledby="heading-@i" data-bs-parent="#accordionExample" style="">
-                <div class="accordion-body">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>
-                                    <light style="font-size: 18px;">Nome</light>
-                                </th>
-                                <th>
-                                    <light style="font-size: 18px;">Ações</light>
-                                </th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var person in jobPersons.Persons)
-                            {
-                                <tr>
-                                    <td>
-                                        <light style="font-size: 15px;">@person.Name</light>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <a class="btn btn-danger" asp-action="Delete" asp-route-companyId="@jobPersons.Job.CompanyId" asp-route-personId="@person.Id" asp-route-jobId="@jobPersons.Job.Id">Delete</a>
-                                        </div>
-                                    </td>
-                                </tr>
-
-                            }
-                        </tbody>
-                    </table>
-
-                </div>
-            </div>
-        </div>
-
+<div class="width-style1">
+    @{
+        ViewData["Title"] = "FUNCIONÁRIOS";
     }
 
+    <h4>@ViewData["Title"]</h4>
+
+    <p>
+        <a asp-action="Create" asp-route-companyId="@this.Model.Content.CompanyId" class="btn btn-success">Adicionar novo Funcionário</a>
+    </p>
+
+    @if (this.Model.Content == null || this.Model.Content.JobPersons.Count <= 0)
+    {
+        <div class="alert alert-dismissible alert-primary width-style2">
+            Nenhuma funcionário a ser exibido.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-dismissible alert-primary width-style1">
+            <div class="accordion" id="accordionExample">
+                @for (int i = 0; i < this.Model.Content.JobPersons.Count; i++)
+                {
+                    var jobPersons = this.Model.Content.JobPersons[i];
+
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-@i" aria-expanded="false" aria-controls="collapse-@i">
+
+                                <light style="font-size: 20px;">@jobPersons.Job.Name (@jobPersons.Persons.Count())</light>
+                            </button>
+                        </h2>
+                        <div id="collapse-@i" class="accordion-collapse collapse" aria-labelledby="heading-@i" data-bs-parent="#accordionExample" style="">
+                            <div class="accordion-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>
+                                                <light style="font-size: 18px;">Nome</light>
+                                            </th>
+                                            <th>
+                                                <light style="font-size: 18px;">Ações</light>
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var person in jobPersons.Persons)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <light style="font-size: 15px;">@person.Name</light>
+                                                </td>
+                                                <td>
+                                                    <div>
+                                                        <a class="btn btn-danger" asp-action="Delete" asp-route-companyId="@jobPersons.Job.CompanyId" asp-route-personId="@person.Id" asp-route-jobId="@jobPersons.Job.Id">Delete</a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+
+                                        }
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    }
+
+    <hr class="custom-hr w-100" />
+
+    <div class="d-flex align-items-center" style="margin-left: 0%; width: 50%;">
+        <a type="button" class="btn btn-outline-primary"
+           asp-controller="Companies"
+           asp-action="Details"
+           asp-route-id="@this.Model.Content?.CompanyId">
+            <i class="bi bi-arrow-left"></i> Voltar à página de detalhes da empresa @this.Model.Content.CompanyName
+        </a>
+    </div>
 </div>
-
-<div>
-    <hr />
-    <a asp-controller="Companies" asp-action="Details" asp-route-id="@this.Model.Content?.CompanyId">Voltar à página de detalhes da empresa @this.Model.Content.CompanyName</a>
-</div>
-
-
 
 

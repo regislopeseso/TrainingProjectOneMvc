@@ -17,7 +17,10 @@ namespace ControleEmpresasFuncionariosMvc.Services
             this._context = context;
         }
 
-
+        public async Task<int> CountAsync()
+        {
+            return await _context.Job.CountAsync();
+        }
 
         #region Create
         public async Task<(JobDto, string)> CreateAsync(JobDto job)
