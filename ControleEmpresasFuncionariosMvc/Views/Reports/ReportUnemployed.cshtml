@@ -1,0 +1,72 @@
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<List<UnemployedReportDto>>
+
+
+<div>
+    @{
+        ViewData["Title"] = "Relatório de mão de obra disponível";
+    }
+
+    <h2>@ViewData["Title"]</h2>
+
+    <hr class="custom-hr w-100" />
+
+    @if (this.Model.Content == null || this.Model.Content.Count <= 0)
+    {
+        <div class="alert alert-dismissible alert-primary width-style5">
+            Atualmente todas as pessoas cadastradas no sistema estão empregadas.
+        </div>
+
+        <hr class="custom-hr2" />
+    }
+    else
+    {
+        <div class="d-flex justify-content-center alert alert-dismissible alert-primary width-style3">
+            <table class="table table-hover table-secondary text-center">
+                <thead>
+                    <tr>
+                        <th class="w-50">
+                            <div>
+                                <strong style="font-size: 20px;">Nome</strong>
+                            </div>
+                        </th>
+
+                        <th class="w-50">
+                            <div>
+                                <strong style="font-size: 20px; ">Idade</strong>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in this.Model.Content)
+                    {
+                        <tr>
+                            <td>
+                                <div class="text-start ps-5">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    @Html.DisplayFor(modelItem => item.Age) anos
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="custom-hr w-100" />
+    }
+
+    
+
+    <div class="d-flex align-items-center" style="margin-left: 0%; width: 100%;">
+        <a type="button" class="btn btn-outline-primary"
+           asp-action="Index">
+            <i class="bi bi-arrow-left"></i> Voltar à página de relatórios
+        </a>
+    </div>
+</div>

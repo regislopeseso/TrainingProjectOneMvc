@@ -1,28 +1,24 @@
 ﻿@using ControleEmpresasFuncionariosMvc.Dtos
-@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<List<CompanyDto>>
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<List<CompaniesWorkersJobsReportDto>>
 
-
-<div class="width-style1">
+<div>
     @{
-        ViewData["Title"] = "EMPRESAS";
+        ViewData["Title"] = "Relatório de empresas";
     }
 
-    <h1>@ViewData["Title"]</h1>
+    <h2>@ViewData["Title"]</h2>
 
-    <p>
-        <a asp-action="Create" class="btn btn-success">Adicionar nova Empresa</a>
-    </p>
+    <hr class="custom-hr w-100" />
 
     @if (this.Model.Content == null || this.Model.Content.Count <= 0)
     {
         <div class="alert alert-dismissible alert-primary width-style5">
-            Nenhuma empresa a ser exibida.
+            Nenhum dado a ser exibido.
         </div>
-
-        <hr class="custom-hr2" />
     }
     else
     {
+
         <div class="d-flex justify-content-center alert alert-dismissible alert-primary">
             <table class="table table-hover table-secondary">
                 <thead>
@@ -34,12 +30,12 @@
                         </th>
                         <th>
                             <div class="text-center">
-                                <strong style="font-size: 20px;">CNPJ</strong>
+                                <strong style="font-size: 20px;">Número de Funcionários</strong>
                             </div>
                         </th>
                         <th style="width: 300px;">
                             <div class="text-center">
-                                <strong style="font-size: 20px; ">Ações</strong>
+                                <strong style="font-size: 20px; ">Número de Cargos</strong>
                             </div>
                         </th>
                     </tr>
@@ -50,19 +46,17 @@
                         <tr>
                             <td>
                                 <div class="text-start ps-4">
-                                    @Html.DisplayFor(modelItem => item.Name)
+                                    @Html.DisplayFor(modelItem => item.CompanyName)
                                 </div>
                             </td>
                             <td>
                                 <div class="text-center">
-                                    @Html.DisplayFor(modelItem => item.Cnpj)
+                                    @Html.DisplayFor(modelItem => item.CountWorkers)
                                 </div>
                             </td>
                             <td>
                                 <div class="text-center">
-                                    <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
-                                    <a class="btn btn-outline-info" asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
-                                    <a class="btn btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">Deletar</a>
+                                    @Html.DisplayFor(modelItem => item.CountJobs)
                                 </div>
                             </td>
                         </tr>
@@ -70,21 +64,14 @@
                 </tbody>
             </table>
         </div>
-
-        <hr class="custom-hr w-100" />
     }
+
+    <hr class="custom-hr w-100" />
 
     <div class="d-flex align-items-center" style="margin-left: 0%; width: 100%;">
         <a type="button" class="btn btn-outline-primary"
-           asp-controller="Home"
            asp-action="Index">
-            <i class="bi bi-arrow-left"></i> Volta à página inicial
+            <i class="bi bi-arrow-left"></i> Voltar à página de relatórios
         </a>
     </div>
 </div>
-
-
-
-
-
-

@@ -13,13 +13,13 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         PersonService personService,
         JobService jobService) : Controller
     {
-        private readonly JobsPersonsService _jobPersonService = jobPersonService;
+        private readonly JobsPersonsService _jobsPersonsService = jobPersonService;
         private readonly PersonService _personService = personService;
         private readonly JobService _jobService = jobService;
 
         public async Task<IActionResult> Index(int companyId)
         {
-            var result = await _jobPersonService.FindAllAsync(companyId);
+            var result = await _jobsPersonsService.FindAllAsync(companyId);
 
             var response = new ResponseViewModel<JobPersonIndexDto>()
             {
@@ -53,7 +53,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(JobPersonDto jobPerson)
         {
-            var (isValid, message) = await _jobPersonService.CreateAsync(jobPerson);
+            var (isValid, message) = await _jobsPersonsService.CreateAsync(jobPerson);
 
             if (isValid == false)
             {
@@ -82,7 +82,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int personId, int jobId)
         {
-            var (result, message) = await _jobPersonService.Delete(personId, jobId);
+            var (result, message) = await _jobsPersonsService.Delete(personId, jobId);
 
             var response = new ResponseViewModel<JobPersonDeleteDto>()
             {
@@ -103,7 +103,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         //Post: Companies/Delete
         public async Task<IActionResult> DeleteAsync(int jobId, int personId, int companyId)
         {
-            await _jobPersonService.DeleteAsync(jobId, personId);
+            await _jobsPersonsService.DeleteAsync(jobId, personId);
 
             return RedirectToAction(nameof(Index), new { companyId = companyId });
         }

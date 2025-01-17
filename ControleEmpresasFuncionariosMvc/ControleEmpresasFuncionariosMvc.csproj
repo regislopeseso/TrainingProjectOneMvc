@@ -16,8 +16,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Reports\" />
     <Folder Include="Views\Workers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="Views\Reports\Index.cshtml">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

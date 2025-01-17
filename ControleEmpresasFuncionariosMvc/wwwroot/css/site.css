@@ -107,6 +107,11 @@ table tr td {
     margin: 20px auto; /* Center it horizontally */
 }
 
+.custom-hr2 {
+    width: 50%; /* Adjust the length */
+    border: 2px solid #000; /* Line thickness and color */
+}
+
 .alert-dismissible2 {
     padding-right: 1em;
 }

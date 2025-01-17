@@ -41,6 +41,23 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 .ToListAsync();
         }
 
+        public async Task<List<UnemployedReportDto>> FindUnemployedAsync()
+        {
+            return await _context.Person
+                .Where(a => a.Jobs.Any() == false )
+                .Select(a => new UnemployedReportDto
+                {
+                    Name = a.Name,
+                    Age = DateTime.Now.Subtract(a.BirthDate).Days/365,
+
+                    //BirthDate = a.BirthDate
+                })
+                .OrderBy(a => a.Name)
+                .ToListAsync();
+        }
+       
+
+
         public async Task<int> CountAsync()
         {
             return await _context.Person.CountAsync();

@@ -16,9 +16,11 @@
 
     @if (this.Model.Content == null || this.Model.Content.Count <= 0)
     {
-        <div class="alert alert-dismissible alert-primary width-style2">
+        <div class="alert alert-dismissible alert-primary width-style5">
             Nenhuma pessoa a ser exibida.
         </div>
+
+        <hr class="custom-hr2" />
     }
     else
     {
@@ -71,5 +73,15 @@
             </table>
 
         </div>
+    
+        <hr class="custom-hr w-100" />
     }
+
+    <div class="d-flex align-items-center" style="margin-left: 0%; width: 100%;">
+        <a type="button" class="btn btn-outline-primary"
+           asp-controller="Home"
+           asp-action="Index">
+            <i class="bi bi-arrow-left"></i> Volta à página inicial
+        </a>
+    </div>
 </div>

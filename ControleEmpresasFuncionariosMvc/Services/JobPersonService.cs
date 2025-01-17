@@ -15,6 +15,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         {
             this._context = context;
         }
+
         public async Task<JobPersonIndexDto?> FindAllAsync(int companyId)
         {
             return await _context.Company
@@ -46,9 +47,36 @@ namespace ControleEmpresasFuncionariosMvc.Services
                         .OrderBy(a => a.Job.Name)
                         .ToList()
                 })
-                .FirstOrDefaultAsync();       
+                .FirstOrDefaultAsync();
         }
+        public async Task<List<WorkersJobsCompaniesReportDto>> ShowAllAsync()
+        {
+            return await _context.Person
+                        .Where(a => a.Jobs.Any())
+                        .Select(a => new WorkersJobsCompaniesReportDto
+                        {
+                            PersonName = a.Name,
+                            JobsCompanies = a.Jobs.Select(b => new JobCompanyDto
+                            {
+                                JobName = b.Name,
+                                CompanyName = b.Company.Name,
+                            }
+                            ).ToList()
+                        }).ToListAsync();
+        }
+        public async Task<List<CompaniesWorkersJobsReportDto>> FindCompaniesAsync()
+        {
+            return await _context.Company
+                .Select(a => new CompaniesWorkersJobsReportDto
+                {
+                    CompanyName = a.Name,
 
+                    CountJobs = a.Jobs.Count(),
+
+                    CountWorkers = a.Jobs.Select(b => b.Persons).Count()
+                })
+                .ToListAsync();
+        }
 
         #region CREATE
         public async Task<(bool, string)> CreateAsync(JobPersonDto jobPerson)
