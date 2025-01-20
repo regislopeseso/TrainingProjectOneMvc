@@ -92,6 +92,11 @@ h5 {
     width:  fit-content;
 }
 
+.width-style6 {
+    max-width: 300px;
+    margin-left: 0 auto;
+}
+
 
 a {
     text-decoration: none;

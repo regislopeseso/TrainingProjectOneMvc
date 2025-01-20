@@ -14,7 +14,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         {
             this._context = context;
         }
-        public async Task<List<CompanyDto>> FindAllAsync()
+        public async Task<List<CompanyDto>> FindAll()
         {
             return await _context.Company
                 .Select(a => new CompanyDto
@@ -27,15 +27,15 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 .ToListAsync();
         }
 
-        public async Task<int> CountAsync()
+        public async Task<int> Count()
         {
             return await _context.Company.CountAsync();
         }
 
         #region Create
-        public async Task<(CompanyDto, string)> CreateAsync(CompanyDto company)
+        public async Task<(CompanyDto, string)> Create(CompanyDto company)
         {
-            var (isValid, message) = await this.CompanyIsValidAsync(company);
+            var (isValid, message) = await this.CompanyIsValid(company);
 
             if (isValid == false)
             {
@@ -53,7 +53,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (company, message);
         }
-        private async Task<(bool, string)> CompanyIsValidAsync(CompanyDto company)
+        private async Task<(bool, string)> CompanyIsValid(CompanyDto company)
         {
             if (company == null)
             {
@@ -112,7 +112,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
             return (company, string.Empty);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task Delete(int id)
         {
             var companyDb = await _context.Company.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -144,24 +144,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                     JobsQty = a.Jobs.Count,
                     WorkersQty = a.Jobs.SelectMany(b => b.Persons).Count(),
                 })
-                .FirstOrDefaultAsync();
-
-            //A operação acima poderia também ser feita como o exemplo abaixo, onde cria-se com o Select uma lista contendo a quantidade de pessoas que está registrada em cada cargo e no fim soma essas quantidades.
-            //var company = await _context.Company
-            //    .Where(a => a.Id == id)
-            //    .Select(a => new CompanyDetailsDto
-            //    {
-            //        Id = a.Id,
-            //        Name = a.Name,
-            //        Cnpj = a.Cnpj,
-            //        JobsQty = a.Jobs.Count,
-            //        WorkersQty = a.Jobs.Select(b => b.Persons.Count).Sum(),
-
-            //        })
-            //    .FirstOrDefaultAsync();
-
-
-
+                .FirstOrDefaultAsync();    
 
             if (company == null)
             {
@@ -173,7 +156,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         #endregion
 
         #region Edit
-        public async Task<(CompanyDto?, string)> Edit(int? id) // Segue a lógica do método Delete(Service)
+        public async Task<(CompanyDto?, string)> Edit(int? id)
         {
             if (id == null || id <= 0)
             {
@@ -200,9 +183,9 @@ namespace ControleEmpresasFuncionariosMvc.Services
         }
 
 
-        public async Task<(CompanyDto, string)> EditAsync(CompanyDto company)
+        public async Task<(CompanyDto, string)> Edit(CompanyDto company)
         {
-            var (isValid, message) = this.EditIsValidAsync(company);
+            var (isValid, message) = this.EditIsValid(company);
 
             if (isValid == false)
             {
@@ -224,7 +207,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (company, string.Empty);
         }
-        private (bool, string) EditIsValidAsync(CompanyDto company)
+        private (bool, string) EditIsValid(CompanyDto company)
         {
             if (company == null)
             {
@@ -250,9 +233,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (true, string.Empty);
         }
-        #endregion
-       
-       
+        #endregion     
     }
 }
 

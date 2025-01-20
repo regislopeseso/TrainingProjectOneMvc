@@ -14,7 +14,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         #region GET: Companies
         public async Task<IActionResult> Index()
         {
-            var result = await _companyService.FindAllAsync();
+            var result = await _companyService.FindAll();
 
             var response = new ResponseViewModel<List<CompanyDto>>()
             {
@@ -35,7 +35,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(CompanyDto company)
         {
-            var (result, message) = await _companyService.CreateAsync(company);
+            var (result, message) = await _companyService.Create(company);
 
             var response = new ResponseViewModel<CompanyDto>()
             {
@@ -75,7 +75,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         //Post: Companies/Delete
         public async Task<IActionResult> Delete(int id)
         {
-            await _companyService.DeleteAsync(id);
+            await _companyService.Delete(id);
 
             return RedirectToAction(nameof(Index));
         }
@@ -123,7 +123,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(CompanyDto company)
         {
-            var (result, message) = await _companyService.EditAsync(company);
+            var (result, message) = await _companyService.Edit(company);
 
             var response = new ResponseViewModel<CompanyDto>()
             {

@@ -19,6 +19,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
 
         public async Task<IActionResult> Index(int companyId)
         {
+            
             var result = await _jobsPersonsService.FindAllAsync(companyId);
 
             var response = new ResponseViewModel<JobPersonIndexDto>()
@@ -31,18 +32,20 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
 
         #region CREATE
         //Get
-        public async Task<IActionResult> Create(int companyId)
+        public async Task<IActionResult> Create(int companyId, int? selectedJobId)
         {
-            var persons = await _personService.FindPersonsAsync();
-            var jobs = await _jobService.FindJobsAsync(companyId);
+            var persons = await _personService.FindPersons();
+            var jobs = await _jobService.FindJobs(companyId);
 
             var response = new ResponseViewModel<JobsPersonsDto>()
             {
                 Content = new JobsPersonsDto()
                 {
                     CompanyId = companyId,
+                    SelectedJobId = selectedJobId,
                     Jobs = jobs,
                     Persons = persons,
+                    
                 }
             };
 
@@ -57,8 +60,8 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
 
             if (isValid == false)
             {
-                var persons = await _personService.FindPersonsAsync();
-                var jobs = await _jobService.FindJobsAsync(jobPerson.CompanyId);
+                var persons = await _personService.FindPersons();
+                var jobs = await _jobService.FindJobs(jobPerson.CompanyId);
 
                 var response = new ResponseViewModel<JobsPersonsDto>()
                 {

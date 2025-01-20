@@ -17,15 +17,47 @@ namespace ControleEmpresasFuncionariosMvc.Services
             this._context = context;
         }
 
-        public async Task<int> CountAsync()
+        #region Search Mechanisms
+        public async Task<CompanyJobsDto?> Search(int companyId)
+        {
+
+            return await _context.Company
+                .Where(x => x.Id == companyId)
+                .Select(x => new CompanyJobsDto
+                {
+                    CompanyId = x.Id,
+                    Name = x.Name,
+                    Jobs = x.Jobs.Select(job => new JobDto
+                    {
+                        Id = job.Id,
+                        Name = job.Name,
+                    }).ToList(),
+                }).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<JobDto>> FindJobs(int companyId)
+        {
+            return await _context.Job
+                .Where(x => x.Company.Id == companyId)
+                .Select(x => new JobDto
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                }).ToListAsync();
+        }
+        public async Task<int> Count()
         {
             return await _context.Job.CountAsync();
         }
 
+
+
+        #endregion
+
         #region Create
-        public async Task<(JobDto, string)> CreateAsync(JobDto job)
+        public async Task<(JobDto, string)> Create(JobDto job)
         {
-            var (isValid, message) = await this.JobIsValidAsync(job);
+            var (isValid, message) = this.JobIsValid(job);
 
             if (isValid == false)
             {
@@ -47,7 +79,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (job, message);
         }
-        private async Task<(bool, string)> JobIsValidAsync(JobDto job)
+        private (bool, string) JobIsValid(JobDto job)
         {
             if (job == null)
             {
@@ -89,7 +121,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
             return (job, string.Empty);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task Delete(int id)
         {
             var jobDb = await _context.Job.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -130,9 +162,9 @@ namespace ControleEmpresasFuncionariosMvc.Services
         }
 
 
-        public async Task<(JobDto, string)> EditAsync(JobDto job)
+        public async Task<(JobDto, string)> Edit(JobDto job)
         {
-            var (isValid, message) = this.EditIsValidAsync(job);
+            var (isValid, message) = this.EditIsValid(job);
 
             if (isValid == false)
             {
@@ -154,7 +186,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (job, string.Empty);
         }
-        private (bool, string) EditIsValidAsync(JobDto job)
+        private (bool, string) EditIsValid(JobDto job)
         {
             if (job == null)
             {
@@ -168,52 +200,6 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (true, string.Empty);
         }
-        #endregion
-
-        #region Search Mechanisms
-        public async Task<CompanyJobsDto?> SearchAsync(int companyId)
-        {
-
-            return await _context.Company
-                .Where(x => x.Id == companyId)
-                .Select(x => new CompanyJobsDto
-                {
-                    CompanyId = x.Id,
-                    Name = x.Name,
-                    Jobs = x.Jobs.Select(job => new JobDto
-                    {
-                        Id = job.Id,
-                        Name = job.Name,
-                    }).ToList(),
-                }).FirstOrDefaultAsync();
-        }
-
-        public async Task<List<JobDto>> FindJobsAsync(int companyId)
-        {
-            return await _context.Job
-                .Where(x => x.Company.Id == companyId)
-                .Select(x => new JobDto
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                }).ToListAsync();
-        }    
-
-
-        #endregion
-
-        //O método abaixo talvez será útil para criar uma lista "drop down" dos cargos disponíveis em uma empresa
-        //no ato de contratar um novo funcionário (associar um cargo a uma pessoa em uma empresa).
-        //public async Task<List<JobDto>> FindAllAsync()
-        //{
-        //    return await _context.Job
-        //        .OrderBy(c => c.Name)
-        //        .Select(a => new JobDto
-        //        {
-        //            Name = a.Name,
-        //        })
-        //        .ToListAsync();
-        //}
+        #endregion         
     }
-
 }

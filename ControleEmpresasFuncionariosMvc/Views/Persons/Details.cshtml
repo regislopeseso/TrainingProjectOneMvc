@@ -1,5 +1,5 @@
 ﻿@using ControleEmpresasFuncionariosMvc.Dtos
-@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<PersonDto>
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<PersonDetailsDto>
 
 @{
     ViewData["Title"] = "Detalhes da PESSOA";
@@ -14,6 +14,7 @@
 </div>
 
 <hr class="custom-hr" />
+
 
 <div class="row justify-content-center">
     <div class="alert alert-dismissible alert-primary width-style3">
@@ -37,7 +38,7 @@
                                     <dt>
                                         Data de Nascimento:
                                         <br />
-                                        <strong>@this.Model.Content?.BirthDate?.ToString("d")</strong>
+                                        <strong>@Html.DisplayFor(model => model.Content.BirthDate)</strong>
                                     </dt>
                                 </dl>
                             </div>
@@ -56,30 +57,47 @@
 
         <br />
 
-        <div class="alert alert-dismissible alert-secondary">
-            <table class="table table-hover table-secondary">
-                <thead>
-                    <tr>
-                        <th>
-                            Cargo
-                        </th>
-                        <th>
-                            Empresa
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            Não implementado
-                        </td>
-                        <td>
-                            Não implementado
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+        @if (this.Model.Content?.Jobs?.Count <= 0)
+        {
+            <div class="text-center">
+                <div class="alert alert-dismissible alert-success width-style5" , style="margin-left: 50px">
+                    Esta pessoa está em busca de uma nova experiência profissional.
+                </div>
+            </div>
+
+        }
+        else
+        {
+
+            <div class="alert alert-dismissible alert-secondary">
+                <table class="table table-hover table-secondary">
+                    <thead>
+                        <tr>
+                            <th>
+                                Cargo
+                            </th>
+                            <th>
+                                Empresa
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var job in this.Model.Content.Jobs)
+                        {
+                            <tr>
+                                <td>
+                                    @job.JobName
+                                </td>
+                                <td>
+                                    @job.CompanyName - @job.Cnpj
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
     </div>
 </div>
 

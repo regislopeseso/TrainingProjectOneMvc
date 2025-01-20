@@ -52,8 +52,7 @@
                         <tr>
                             <td>
                                 <div class="text-start ps-4">
-                                    @Html.DisplayFor(modelItem => employee.PersonName)
-
+                                    @employee.PersonName
                                 </div>
                             </td>
 
@@ -61,7 +60,7 @@
                                 @foreach (var job in employee.JobsCompanies)
                                 {
                                     <div class="text-center">
-                                        @Html.DisplayFor(modelItem => job.JobName)
+                                       @job.JobName
                                     </div>
                                 }
                             </td>

@@ -7,14 +7,15 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
-    public class PersonsController(PersonService personService) : Controller
+    public class PersonsController(PersonService personService, JobService jobService) : Controller
     {
         private readonly PersonService _personService = personService;
+        private readonly JobService _jobService = jobService;
 
         #region GET: Persons
         public async Task<IActionResult> Index()
         {
-            var result = await _personService.FindAllAsync();
+            var result = await _personService.FindAll();
 
             var response = new ResponseViewModel<List<PersonDto>>()
             {
@@ -35,7 +36,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(PersonDto person)
         {
-            var (result, message) = await _personService.CreateAsync(person);
+            var (result, message) = await _personService.Create(person);
 
             var response = new ResponseViewModel<PersonDto>()
             {
@@ -75,7 +76,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         //Post: Companies/Delete
         public async Task<IActionResult> Delete(int id)
         {
-            await _personService.DeleteAsync(id);
+            await _personService.Delete(id);
 
             return RedirectToAction(nameof(Index));
         }
@@ -91,7 +92,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
                 return NotFound(message);
             }
 
-            var response = new ResponseViewModel<PersonDto>()
+            var response = new ResponseViewModel<PersonDetailsDto>()
             {
                 Content = person,
                 Message = message,
@@ -123,7 +124,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(PersonDto person)
         {
-            var (result, message) = await _personService.EditAsync(person);
+            var (result, message) = await _personService.Edit(person);
 
             var response = new ResponseViewModel<PersonDto>()
             {

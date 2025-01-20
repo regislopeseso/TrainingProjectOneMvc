@@ -16,7 +16,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         }
 
         #region SEARCH MECHANISMS
-        public async Task<List<PersonDto>> FindAllAsync()
+        public async Task<List<PersonDto>> FindAll()
         {
             return await _context.Person
                 .OrderBy(c => c.Name)
@@ -28,7 +28,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .ToListAsync();
         }
-        public async Task<List<PersonDto>> FindPersonsAsync()
+        public async Task<List<PersonDto>> FindPersons()
         {
             return await _context.Person
                 .OrderBy(c => c.Name)
@@ -39,7 +39,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .ToListAsync();
         }
-        public async Task<List<UnemployedReportDto>> FindUnemployedAsync()
+        public async Task<List<UnemployedReportDto>> FindUnemployed()
         {
             return await _context.Person
                 .Where(a => a.Jobs.Any() == false )
@@ -53,11 +53,11 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 .OrderBy(a => a.Name)
                 .ToListAsync();
         }  
-        public async Task<int> CountAsync()
+        public async Task<int> Count()
         {
             return await _context.Person.CountAsync();
         }
-        public async Task<int> CountUnemployedAsync()
+        public async Task<int> CountUnemployed()
         {
             return await _context.Person
                .Where(a => a.Jobs.Any() == false)
@@ -66,7 +66,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         #endregion
 
         #region Create
-        public async Task<(PersonDto, string)> CreateAsync(PersonDto person)
+        public async Task<(PersonDto, string)> Create(PersonDto person)
         {
             var (isValid, message) = this.PersonIsValid(person);
 
@@ -86,7 +86,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (person, message);
         }
-        private  (bool, string) PersonIsValid(PersonDto person)
+        private (bool, string) PersonIsValid(PersonDto person)
         {
             if (person == null)
             {
@@ -133,7 +133,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
             return (person, string.Empty);
         }
 
-        public async Task DeleteAsync(int id)
+        public async Task Delete(int id)
         {
             var personDB = await _context.Person.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -147,7 +147,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         #endregion
 
         #region Details
-        public async Task<(PersonDto?, string)> Details(int? id)
+        public async Task<(PersonDetailsDto?, string)> Details(int? id)
         {
 
             if (id == null || id <= 0)
@@ -156,12 +156,18 @@ namespace ControleEmpresasFuncionariosMvc.Services
             }
 
             var person = await _context.Person
-                .Where(c => c.Id == id)
-                .Select(x => new PersonDto
+                .Where(a => a.Id == id)
+                .Select(a => new PersonDetailsDto
                 {
-                    Id = x.Id,
-                    Name = x.Name,
-                    BirthDate = x.BirthDate,
+                    Id = a.Id,
+                    Name = a.Name,
+                    BirthDate = a.BirthDate,
+                    Jobs = a.Jobs.Select(b => new JobCompanyDto
+                    {
+                        JobName = b.Name,
+                        CompanyName = b.Company.Name,
+                        Cnpj = b.Company.Cnpj,
+                    }).ToList()
                 })
                 .FirstOrDefaultAsync();
 
@@ -175,7 +181,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         #endregion
 
         #region Edit
-        public async Task<(PersonDto?, string)> Edit(int? id) // Segue a lógica do método Delete(Service)
+        public async Task<(PersonDto?, string)> Edit(int? id)
         {
             if (id == null || id <= 0)
             {
@@ -201,9 +207,9 @@ namespace ControleEmpresasFuncionariosMvc.Services
             return (person, string.Empty);
         }
 
-        public async Task<(PersonDto, string)> EditAsync(PersonDto person)
+        public async Task<(PersonDto, string)> Edit(PersonDto person)
         {
-            var (isValid, message) = this.EditIsValidAsync(person);
+            var (isValid, message) = this.EditIsValid(person);
 
             if (isValid == false)
             {
@@ -224,7 +230,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             return (person, string.Empty);
         }
-        private (bool, string) EditIsValidAsync(PersonDto person)
+        private (bool, string) EditIsValid(PersonDto person)
         {
             if (person == null)
             {

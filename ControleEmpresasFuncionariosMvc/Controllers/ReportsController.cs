@@ -24,8 +24,8 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         #region GET: Reports
         public async Task<IActionResult> IndexAsync()
         {
-            var companiesQty= await _companyService.CountAsync();
-            var unemploeyQty = await _personService.CountUnemployedAsync();
+            var companiesQty= await _companyService.Count();
+            var unemploeyQty = await _personService.CountUnemployed();
             var workersQty = await _jobsPersonsService.CountAsync();
 
             var response = new ResponseViewModel<ReportsIndexDto>()
@@ -55,7 +55,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
 
         public async Task<IActionResult> ReportUnemployedAsync()
         {
-            var persons = await _personService.FindUnemployedAsync();
+            var persons = await _personService.FindUnemployed();
 
             var response = new ResponseViewModel<List<UnemployedReportDto>>()
             {

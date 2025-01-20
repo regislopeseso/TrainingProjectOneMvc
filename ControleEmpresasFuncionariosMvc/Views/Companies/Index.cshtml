@@ -13,8 +13,12 @@
         <a asp-action="Create" class="btn btn-success">Adicionar nova Empresa</a>
     </p>
 
+    
+
     @if (this.Model.Content == null || this.Model.Content.Count <= 0)
     {
+        <hr class="custom-hr2" />
+
         <div class="alert alert-dismissible alert-primary width-style5">
             Nenhuma empresa a ser exibida.
         </div>
@@ -23,6 +27,8 @@
     }
     else
     {
+        <hr class="custom-hr w-100" />
+
         <div class="d-flex justify-content-center alert alert-dismissible alert-primary">
             <table class="table table-hover table-secondary">
                 <thead>

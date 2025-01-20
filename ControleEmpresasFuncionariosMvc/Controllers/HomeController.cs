@@ -20,9 +20,9 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
             {
                 Content = new CompaniesJobsPersonsHomeDto
                 {
-                    CountCompanies = await _companyService.CountAsync(),
-                    CountJobs = await _jobService.CountAsync(),
-                    CountPersons = await _personService.CountAsync(),
+                    CountCompanies = await _companyService.Count(),
+                    CountJobs = await _jobService.Count(),
+                    CountPersons = await _personService.Count(),
                 }
             };
 

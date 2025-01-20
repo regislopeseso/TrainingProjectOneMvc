@@ -49,7 +49,9 @@
                     {
                         foreach (var job in Model.Content.Jobs)
                         {
-                            <option value="@job.Id">@job.Name</option>
+                            <option value="@job.Id" selected = "@(job.Id == this.Model.Content.SelectedJobId ? true : false)">@job.Name
+                           
+                            </option>
                         }
                     }
                 </select>

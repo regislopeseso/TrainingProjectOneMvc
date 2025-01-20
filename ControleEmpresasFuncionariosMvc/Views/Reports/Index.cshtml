@@ -9,33 +9,83 @@
     <h1>@ViewData["Title"]</h1>
 
     <hr class="custom-hr" />
-    <div class="alert alert-dismissible alert-primary  width-style2">
-        <div class="d-flex align-items-center" style="margin-left: 10%; width: 100%;">
-            <a type="button" class="btn btn-outline-primary"
-               asp-action="ReportWorkersJobsCompanies">
-                <i class="bi bi-card-list"></i> Relatório de funcionários (@this.Model.Content.WorkersCount)<i class="bi bi-arrow-right"></i>
-            </a>
+    @if (this.Model.Content?.WorkersCount <= 0 && this.Model.Content?.CompaniesCount <= 0 && this.Model.Content?.UnemployedCount <= 0)
+    {
+        <div class="alert alert-dismissible alert-danger  width-style2">
+            <div class="d-flex align-items-center" style="margin-left: 10%; width: 100%;">
+                <div class="alert alert-dismissible alert-danger text-start">
+                    <i class="bi bi-card-list"></i> <s>Relatórios</s>
+                    <br />
+                    <strong> Nenhum relatório a ser exibido.</strong>
+                    <br />
+                    Nenhuma pessoa nem empresa foram cadastrados no sistema.
+                </div>
+            </div>
         </div>
+    }
+    else
+    {
+        <div class="alert alert-dismissible alert-primary  width-style2">
+            <div class="d-flex align-items-center" style="margin-left: 5%; width: 100%;">
+                @if (this.Model.Content?.WorkersCount <= 0)
+                {
+                    <div class="alert alert-dismissible alert-warning text-start">
+                       
+                        <i class="bi bi-card-list"></i> <s>Relatório de funcionários</s>
+                        <br />
+                        <strong>Nenhum funcionário cadastrado no sistema.</strong>
+                    </div>
+                }
+                else
+                {
+                    <a type="button" class="btn btn-outline-primary"
+                       asp-action="ReportWorkersJobsCompanies">
+                        <i class="bi bi-card-list"></i> Relatório de funcionários (@this.Model.Content?.WorkersCount)<i class="bi bi-arrow-right"></i>
+                    </a>
+                }
+            </div>
 
-        <hr class="custom-hr" />
+            <hr class="custom-hr" />
 
-        <div class="d-flex align-items-center" style="margin-left: 10%; width: 100%;">
-            <a type="button" class="btn btn-outline-primary"
-               asp-action="ReportCompaniesWorkersJobs"
-            @* asp-route-Id="@this.Model.Content?.Id"*@>
-                <i class="bi bi-card-list"></i> Relatório de empresas (@this.Model.Content.CompaniesCount) <i class="bi bi-arrow-right"></i>
-            </a>
-        </div>  
+            <div class="d-flex align-items-center" style="margin-left: 5%; width: 100%;">
+                @if (this.Model.Content?.CompaniesCount <= 0)
+                {
+                    <div class="alert alert-dismissible alert-warning text-start">
+                        <i class="bi bi-card-list"></i> <s>Relatório de empresas</s>
+                        <br />
+                        <strong>Nenhum empresa cadastrada no sistema.</strong>
+                    </div>
+                }
+                else
+                {
+                    <a type="button" class="btn btn-outline-primary"
+                       asp-action="ReportCompaniesWorkersJobs">
+                        <i class="bi bi-card-list"></i> Relatório de empresas (@this.Model.Content?.CompaniesCount) <i class="bi bi-arrow-right"></i>
+                    </a>
+                }
+            </div>
 
-        <hr class="custom-hr" />
+            <hr class="custom-hr" />
 
-        <div class="d-flex align-items-center" style="margin-left: 10%; width: 100%;">
-            <a type="button" class="btn btn-outline-primary"
-               asp-action="ReportUnemployed">
-                <i class="bi bi-card-list"></i> Relatório de mão de obra disponível (@this.Model.Content.UnemployedCount)<i class="bi bi-arrow-right"></i>
-            </a>
+            <div class="d-flex align-items-center" style="margin-left: 5%; width: 100%;">
+                @if (this.Model.Content?.UnemployedCount <= 0)
+                {
+                    <div class="alert alert-dismissible alert-warning text-start">
+                        <i class="bi bi-card-list"></i> <s>Relatório de mão de obra disponível</s>
+                        <br />
+                        <strong>Todas as pessoas do sistema possuem um ou mais cargos.</strong>
+                    </div>
+                }
+                else
+                {
+                    <a type="button" class="btn btn-outline-primary"
+                       asp-action="ReportUnemployed">
+                        <i class="bi bi-card-list"></i> Relatório de mão de obra disponível (@this.Model.Content?.UnemployedCount)<i class="bi bi-arrow-right"></i>
+                    </a>
+                }
+            </div>
         </div>
-    </div>
+    }
 
     <hr class="custom-hr" />
 </div>

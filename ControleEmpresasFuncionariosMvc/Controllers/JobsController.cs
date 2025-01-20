@@ -1,11 +1,7 @@
-﻿using ControleEmpresasFuncionariosMvc.Data;
-using ControleEmpresasFuncionariosMvc.Dtos;
-using ControleEmpresasFuncionariosMvc.Models;
+﻿using ControleEmpresasFuncionariosMvc.Dtos;
 using ControleEmpresasFuncionariosMvc.Models.ViewModels;
 using ControleEmpresasFuncionariosMvc.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
@@ -17,7 +13,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         #region GET: Jobs
         public async Task<IActionResult> Index(int companyId)
         {
-            var companyJobs = await _jobService.SearchAsync(companyId);
+            var companyJobs = await _jobService.Search(companyId);
             var response = new ResponseViewModel<CompanyJobsDto>
             {
                 Content = companyJobs,
@@ -40,7 +36,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(JobDto job)
         {
-            var (result, message) = await _jobService.CreateAsync(job);
+            var (result, message) = await _jobService.Create(job);
 
             var response = new ResponseViewModel<JobDto>()
             {
@@ -80,7 +76,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         //Post: Companies/Delete
         public async Task<IActionResult> Delete(JobDto job)
         {
-            await _jobService.DeleteAsync(job.Id);
+            await _jobService.Delete(job.Id);
 
             return RedirectToAction("Index", "Jobs", new { companyId = job.CompanyId });
         }
@@ -108,7 +104,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(JobDto job)
         {
-            var (result, message) = await _jobService.EditAsync(job);
+            var (result, message) = await _jobService.Edit(job);
 
             var response = new ResponseViewModel<JobDto>()
             {
@@ -128,7 +124,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         #region SEARCH
         public async Task<IActionResult> Search(int companyId)
         {
-            var jobs = await _jobService.SearchAsync(companyId);
+            var jobs = await _jobService.Search(companyId);
 
             return View(jobs);
         }   

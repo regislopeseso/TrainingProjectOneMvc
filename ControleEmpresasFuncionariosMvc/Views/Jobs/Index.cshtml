@@ -12,8 +12,12 @@
         <a asp-action="Create" asp-route-companyId="@this.Model.Content?.CompanyId" class="btn btn-success">Adicionar novo Cargo</a>
     </p>
 
+    
+
     @if (this.Model.Content == null || this.Model.Content.Jobs.Count <= 0)
     {
+        <hr class="custom-hr2" />
+
         <div class="alert alert-dismissible alert-primary width-style5">
             Nenhuma cargo a ser exibido.
         </div>
@@ -22,8 +26,15 @@
     }
     else
     {
+        <hr class="custom-hr w-100" />
+
+        <div class="input-group mb-3 width-style6">
+            <input type="text" id="filterInput" class="form-control" placeholder="Filtrar" aria-label="Filtrar" aria-describedby="button-addon2">
+            <button class="btn btn-primary" type="button" id="button-addon2">Filtrar</button>
+        </div>
+
         <div class="alert alert-dismissible alert-primary width-style1">
-            <table class="table table-hover table-secondary text-center">
+            <table class="table table-hover table-secondary text-center" id="jobsTable">
                 <thead>
                     <tr>
                         <th>
@@ -58,9 +69,9 @@
                 </tbody>
             </table>
         </div>
-
-        <hr class="custom-hr w-100" />
+    <hr class="custom-hr w-100" />
     }
+
 
     <div class="d-flex align-items-center" style="margin-left: 0%; width: 50%;">
         <a type="button" class="btn btn-outline-primary"
@@ -71,3 +82,19 @@
         </a>
     </div>
 </div>
+
+<script>
+    document.getElementById('filterInput').addEventListener('keyup', function () {
+        const filter = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#jobsTable tbody tr');
+
+        rows.forEach(row => {
+            const jobName = row.querySelector('td:first-child').textContent.toLowerCase();
+            if (jobName.includes(filter)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+</script>

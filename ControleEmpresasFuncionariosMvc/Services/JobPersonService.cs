@@ -29,6 +29,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                     CompanyName = a.Name,
 
                     JobPersons = a.Jobs
+                    .Where(a => a.Persons.Any())
                         .Select(b => new JobPersonsDto
                         {
                             Job = new JobDto
@@ -81,6 +82,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .ToListAsync();
         }
+        
         public async Task<int> CountAsync()
         {
             return await _context.Person               
