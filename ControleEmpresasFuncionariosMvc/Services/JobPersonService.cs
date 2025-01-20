@@ -2,6 +2,8 @@
 using ControleEmpresasFuncionariosMvc.Dtos;
 using ControleEmpresasFuncionariosMvc.Models;
 using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.Design;
+using System.Linq;
 using System.Security.Cryptography.Xml;
 using System.Text.RegularExpressions;
 
@@ -10,12 +12,13 @@ namespace ControleEmpresasFuncionariosMvc.Services
     public class JobsPersonsService
     {
         private readonly ControleEmpresasFuncionariosMvcContext _context;
-
         public JobsPersonsService(ControleEmpresasFuncionariosMvcContext context)
         {
             this._context = context;
         }
 
+
+        #region Search Mechanisms
         public async Task<JobPersonIndexDto?> FindAllAsync(int companyId)
         {
             return await _context.Company
@@ -60,6 +63,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                             {
                                 JobName = b.Name,
                                 CompanyName = b.Company.Name,
+                                Cnpj = b.Company.Cnpj,
                             }
                             ).ToList()
                         }).ToListAsync();
@@ -77,6 +81,14 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .ToListAsync();
         }
+        public async Task<int> CountAsync()
+        {
+            return await _context.Person               
+                .Where(a => a.Jobs.Any())
+                .CountAsync();                     
+        }
+
+        #endregion
 
         #region CREATE
         public async Task<(bool, string)> CreateAsync(JobPersonDto jobPerson)

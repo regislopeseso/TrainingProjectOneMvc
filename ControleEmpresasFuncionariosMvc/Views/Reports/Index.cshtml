@@ -1,4 +1,5 @@
-﻿
+﻿@using ControleEmpresasFuncionariosMvc.Dtos
+@model ControleEmpresasFuncionariosMvc.Models.ViewModels.ResponseViewModel<ReportsIndexDto>
 
 <div class="text-center">
     @{
@@ -12,7 +13,7 @@
         <div class="d-flex align-items-center" style="margin-left: 10%; width: 100%;">
             <a type="button" class="btn btn-outline-primary"
                asp-action="ReportWorkersJobsCompanies">
-                <i class="bi bi-card-list"></i> Relatório de funcionários <i class="bi bi-arrow-right"></i>
+                <i class="bi bi-card-list"></i> Relatório de funcionários (@this.Model.Content.WorkersCount)<i class="bi bi-arrow-right"></i>
             </a>
         </div>
 
@@ -22,7 +23,7 @@
             <a type="button" class="btn btn-outline-primary"
                asp-action="ReportCompaniesWorkersJobs"
             @* asp-route-Id="@this.Model.Content?.Id"*@>
-                <i class="bi bi-card-list"></i> Relatório de empresas <i class="bi bi-arrow-right"></i>
+                <i class="bi bi-card-list"></i> Relatório de empresas (@this.Model.Content.CompaniesCount) <i class="bi bi-arrow-right"></i>
             </a>
         </div>  
 
@@ -31,7 +32,7 @@
         <div class="d-flex align-items-center" style="margin-left: 10%; width: 100%;">
             <a type="button" class="btn btn-outline-primary"
                asp-action="ReportUnemployed">
-                <i class="bi bi-card-list"></i> Relatório de mão de obra disponível <i class="bi bi-arrow-right"></i>
+                <i class="bi bi-card-list"></i> Relatório de mão de obra disponível (@this.Model.Content.UnemployedCount)<i class="bi bi-arrow-right"></i>
             </a>
         </div>
     </div>

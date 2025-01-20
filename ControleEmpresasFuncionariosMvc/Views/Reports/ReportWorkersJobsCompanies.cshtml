@@ -22,45 +22,61 @@
             <table class="table table-hover table-secondary">
                 <thead>
                     <tr>
+
                         <th>
                             <div class="text-start ps-4">
                                 <strong style="font-size: 20px;">Nome</strong>
                             </div>
                         </th>
+
                         <th>
                             <div class="text-center">
                                 <strong style="font-size: 20px;">Cargo</strong>
                             </div>
                         </th>
+
                         <th style="width: 300px;">
                             <div class="text-center">
                                 <strong style="font-size: 20px; ">Empresa</strong>
                             </div>
                         </th>
+
                     </tr>
                 </thead>
+
                 <tbody>
-                    @foreach (var employee in this.Model.Content)
+                    @for (int i = 0; i < this.Model.Content.Count; i++)
                     {
+                        var employee = this.Model.Content[i];
+
                         <tr>
                             <td>
                                 <div class="text-start ps-4">
                                     @Html.DisplayFor(modelItem => employee.PersonName)
+
                                 </div>
                             </td>
-                            @foreach (var item in employee.JobsCompanies)
-                            {
-                                <td>
+
+                            <td>
+                                @foreach (var job in employee.JobsCompanies)
+                                {
                                     <div class="text-center">
-                                        @Html.DisplayFor(modelItem => item.JobName)
+                                        @Html.DisplayFor(modelItem => job.JobName)
                                     </div>
-                                </td>
-                                <td>
+                                }
+                            </td>
+                            
+                            <td>
+                                @foreach (var company in employee.JobsCompanies)
+                                {
+
                                     <div class="text-center">
-                                        @Html.DisplayFor(modelItem => item.CompanyName)
+                                        @Html.DisplayFor(modelItem => company.CompanyName) - @Html.DisplayFor(modelItem => company.Cnpj)
+                                        
                                     </div>
-                                </td>
-                            }
+                                }
+                            </td>
+
                         </tr>
                     }
                 </tbody>

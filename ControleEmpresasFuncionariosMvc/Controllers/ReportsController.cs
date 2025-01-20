@@ -22,9 +22,23 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         private readonly CompanyService _companyService = companyService;
         private readonly JobService _jobService = jobService;
         #region GET: Reports
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            return View();
+            var companiesQty= await _companyService.CountAsync();
+            var unemploeyQty = await _personService.CountUnemployedAsync();
+            var workersQty = await _jobsPersonsService.CountAsync();
+
+            var response = new ResponseViewModel<ReportsIndexDto>()
+            {          
+                Content = new ReportsIndexDto()
+                {
+                    CompaniesCount = companiesQty,
+                    UnemployedCount = unemploeyQty,
+                    WorkersCount = workersQty,
+                },
+            };
+
+            return View(response);
         }
 
         public async Task<IActionResult> ReportCompaniesWorkersJobsAsync()

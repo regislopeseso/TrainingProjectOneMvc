@@ -28,7 +28,6 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .ToListAsync();
         }
-
         public async Task<List<PersonDto>> FindPersonsAsync()
         {
             return await _context.Person
@@ -40,7 +39,6 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .ToListAsync();
         }
-
         public async Task<List<UnemployedReportDto>> FindUnemployedAsync()
         {
             return await _context.Person
@@ -54,13 +52,16 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .OrderBy(a => a.Name)
                 .ToListAsync();
-        }
-       
-
-
+        }  
         public async Task<int> CountAsync()
         {
             return await _context.Person.CountAsync();
+        }
+        public async Task<int> CountUnemployedAsync()
+        {
+            return await _context.Person
+               .Where(a => a.Jobs.Any() == false)
+               .CountAsync();
         }
         #endregion
 

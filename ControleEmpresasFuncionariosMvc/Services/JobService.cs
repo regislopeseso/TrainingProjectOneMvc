@@ -173,6 +173,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         #region Search Mechanisms
         public async Task<CompanyJobsDto?> SearchAsync(int companyId)
         {
+
             return await _context.Company
                 .Where(x => x.Id == companyId)
                 .Select(x => new CompanyJobsDto
