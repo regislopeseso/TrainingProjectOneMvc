@@ -1,10 +1,7 @@
-﻿using ControleEmpresasFuncionariosMvc.Data;
-using ControleEmpresasFuncionariosMvc.Dtos;
-using ControleEmpresasFuncionariosMvc.Models;
+﻿using ControleEmpresasFuncionariosMvc.Dtos;
 using ControleEmpresasFuncionariosMvc.Models.ViewModels;
 using ControleEmpresasFuncionariosMvc.Services;
 using Microsoft.AspNetCore.Mvc;
-using System.ComponentModel.Design;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
@@ -20,7 +17,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         public async Task<IActionResult> Index(int companyId)
         {
             
-            var result = await _jobsPersonsService.FindAllAsync(companyId);
+            var result = await _jobsPersonsService.FindAll(companyId);
 
             var response = new ResponseViewModel<JobPersonIndexDto>()
             {
@@ -56,7 +53,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(JobPersonDto jobPerson)
         {
-            var (isValid, message) = await _jobsPersonsService.CreateAsync(jobPerson);
+            var (isValid, message) = await _jobsPersonsService.Create(jobPerson);
 
             if (isValid == false)
             {
@@ -85,7 +82,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         [HttpGet]
         public async Task<IActionResult> Delete(int personId, int jobId)
         {
-            var (result, message) = await _jobsPersonsService.Delete(personId, jobId);
+            var (result, message) = await _jobsPersonsService.DeleteCheck(personId, jobId);
 
             var response = new ResponseViewModel<JobPersonDeleteDto>()
             {
@@ -106,7 +103,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         //Post: Companies/Delete
         public async Task<IActionResult> DeleteAsync(int jobId, int personId, int companyId)
         {
-            await _jobsPersonsService.DeleteAsync(jobId, personId);
+            await _jobsPersonsService.Delete(jobId, personId);
 
             return RedirectToAction(nameof(Index), new { companyId = companyId });
         }

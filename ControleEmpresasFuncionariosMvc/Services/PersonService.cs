@@ -16,16 +16,54 @@ namespace ControleEmpresasFuncionariosMvc.Services
         }
 
         #region SEARCH MECHANISMS
-        public async Task<List<PersonDto>> FindAll()
+        //public async Task<List<PersonDto>> FindAll()
+        //{
+        //    return await _context.Person
+        //        .OrderBy(c => c.Name)
+        //        .Select(a => new PersonDto
+        //        {
+        //            Id = a.Id,
+        //            Name = a.Name,
+        //            BirthDate = a.BirthDate,
+        //        })
+        //        .ToListAsync();
+        //}
+        public async Task<List<PersonDto>> FindAll(string? filter)
         {
-            return await _context.Person
-                .OrderBy(c => c.Name)
+            var personQueryable = _context.Person.AsNoTracking().AsQueryable();
+
+            if (string.IsNullOrWhiteSpace(filter) == false)
+            {
+                personQueryable = personQueryable.Where(a => a.Name.Contains(filter));
+            }
+
+            return await personQueryable
                 .Select(a => new PersonDto
                 {
                     Id = a.Id,
                     Name = a.Name,
                     BirthDate = a.BirthDate,
                 })
+                .OrderBy(c => c.Name)
+                .ToListAsync();
+        }
+        public async Task<List<PersonDto>> PersonsListForSearch(string? filter)
+        {
+
+            if (string.IsNullOrWhiteSpace(filter) == true)
+            {
+                return [];
+            }
+
+            return await _context.Person.AsNoTracking()
+                .Where(a => a.Name.Contains(filter))
+                .Select(a => new PersonDto
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    BirthDate = a.BirthDate,
+                })
+                .OrderBy(c => c.Name)
                 .ToListAsync();
         }
         public async Task<List<PersonDto>> FindPersons()
@@ -42,17 +80,17 @@ namespace ControleEmpresasFuncionariosMvc.Services
         public async Task<List<UnemployedReportDto>> FindUnemployed()
         {
             return await _context.Person
-                .Where(a => a.Jobs.Any() == false )
+                .Where(a => a.Jobs.Any() == false)
                 .Select(a => new UnemployedReportDto
                 {
                     Name = a.Name,
-                    Age = DateTime.Now.Subtract(a.BirthDate).Days/365,
+                    Age = DateTime.Now.Subtract(a.BirthDate).Days / 365,
 
                     //BirthDate = a.BirthDate
                 })
                 .OrderBy(a => a.Name)
                 .ToListAsync();
-        }  
+        }
         public async Task<int> Count()
         {
             return await _context.Person.CountAsync();

@@ -7,32 +7,97 @@
 }
 
 <div class="text-center">
+
     <br />
     <br />
-    <br />
+
     <h1 class="display-1">Protótipo:</h1>
     <h2><strong>Controle Empresas, Cargos, Pessoas e Funcionários</strong></h2>
 
     <br />
     <br />
 
-    <div class="alert alert-dismissible alert-secondary width-style2">
-        <div class="text-center">
-            <hr class="custom-hr w-100" />
-            <h3>Overview</h3>
-            <div class="text-lg-start">
-                <br />
-                <h5>Empresas(@this.Model.Content.CountCompanies)</h5>
-                <br />
-                <h5>Cargos(@this.Model.Content.CountJobs)</h5>
-                <br />
-                <h5>Pessoas(@this.Model.Content.CountPersons)</h5>
+    <hr class="custom-hr w-100" />
+
+    <br />
+    <br />
+
+    <div class="alert alert-dismissible alert-primary">
+        <div class="row">
+            <div class="col-6">
+
+                <div class="text-center">
+                    <h3>Overview</h3>
+
+                    <br />
+
+                    <h5>Empresas(@this.Model.Content.CountCompanies)</h5>
+
+                    <br />
+
+                    <h5>Funcionários(@this.Model.Content.CountPersons)</h5>
+                </div>
             </div>
-            <hr class="custom-hr w-100" />
+
+            <div class="col-6 alert alert-dismissible alert-secondary text-center">
+                <h4>Busca rápida</h4>
+
+                <br />
+
+                <div class="width-style7">
+                    <form method="get">
+                        <div class="input-group">
+                            <input name="Filter" type="text" class="form-control" placeholder="Buscar" aria-label="Filtrar">
+                            <button class="btn btn-secondary btn-lg" type="submit">Filtrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
+    <br />
+    <br />
 
+    <hr class="custom-hr w-100" />
+    @{
+        var hasCompanies = this.Model.Content.Companies.Count > 0;
+        var hasPersons = this.Model.Content.Persons.Count > 0;
+        if (hasCompanies || hasPersons)
+        {
+            <div class="alert alert-dismissible alert-primary width-style2 text-start">
+                @if (hasCompanies)
+                {
+                    foreach (var company in this.Model.Content.Companies)
+                    {
+                        <div>
+                            <a type="button" class="btn btn-outline-primary"
+                               asp-controller="Companies"
+                               asp-action="Details"
+                               asp-route-id="@company.Id">
+                                <i class="bi bi-briefcase-fill"></i> @company.Name
+                            </a>
+                        </div>
+                    }
+                }
+                @if (hasPersons)
+                {
+                    foreach (var person in this.Model.Content.Persons)
+                    {
+                        <div>
+                            <a type="button" class="btn btn-outline-primary"
+                               asp-controller="Persons"
+                               asp-action="Details"
+                               asp-route-id="@person.Id">
+                                <i class="bi bi-people-fill"></i> @person.Name
+                            </a>
+                        </div>
+                    }
+                }
+            </div>
 
-
+            <hr class="custom-hr w-100" />
+        }
+    }
 </div>
+

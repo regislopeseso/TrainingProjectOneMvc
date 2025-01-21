@@ -30,13 +30,13 @@
                         </th>
 
                         <th>
-                            <div class="text-center">
+                            <div class="text-start">
                                 <strong style="font-size: 20px;">Cargo</strong>
                             </div>
                         </th>
 
-                        <th style="width: 300px;">
-                            <div class="text-center">
+                        <th >
+                            <div class="text-start">
                                 <strong style="font-size: 20px; ">Empresa</strong>
                             </div>
                         </th>
@@ -59,19 +59,32 @@
                             <td>
                                 @foreach (var job in employee.JobsCompanies)
                                 {
-                                    <div class="text-center">
-                                       @job.JobName
+                                    <div class="text-start">
+                                        <a type="button" class="btn btn-outline-primary"
+                                           asp-controller="Jobs"
+                                           asp-action="Edit"
+                                           asp-route-id="@job.JobId">
+                                            <i class="bi bi-pencil-square"></i> @Html.DisplayFor(modelItem => job.JobName)
+                                        </a>
                                     </div>
                                 }
                             </td>
                             
                             <td>
                                 @foreach (var company in employee.JobsCompanies)
-                                {
-
-                                    <div class="text-center">
-                                        @Html.DisplayFor(modelItem => company.CompanyName) - @Html.DisplayFor(modelItem => company.Cnpj)
-                                        
+                                {                   
+                                    <div class="width-style8">
+                                        <a type="button" class="btn btn-outline-primary text-start"
+                                           asp-controller="Companies"
+                                           asp-action="Details"
+                                           asp-route-id="@company.CompanyId">
+                                            
+                                            <div>
+                                                <i class="bi bi-briefcase-fill me-2"></i> <strong>@Html.DisplayFor(modelItem => company.CompanyName)</strong>
+                                                <br />
+                                                <small><strong>CNPJ:</strong> @Html.DisplayFor(modelItem => company.Cnpj)</small>
+                                            </div>
+                                        </a>
                                     </div>
                                 }
                             </td>

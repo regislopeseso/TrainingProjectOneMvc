@@ -1,9 +1,7 @@
-﻿using ControleEmpresasFuncionariosMvc.Data;
-using ControleEmpresasFuncionariosMvc.Dtos;
+﻿using ControleEmpresasFuncionariosMvc.Dtos;
 using ControleEmpresasFuncionariosMvc.Models.ViewModels;
 using ControleEmpresasFuncionariosMvc.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
@@ -12,13 +10,15 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         private readonly CompanyService _companyService = companyService;           
 
         #region GET: Companies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 0)
         {
-            var result = await _companyService.FindAll();
+            var (companies, pagesQty) = await _companyService.FindAll(page);
 
             var response = new ResponseViewModel<List<CompanyDto>>()
             {
-                Content = result
+                Content = companies,
+                Page = page,
+                PagesQty = pagesQty
             };
 
             return View(response);

@@ -14,9 +14,56 @@ namespace ControleEmpresasFuncionariosMvc.Services
         {
             this._context = context;
         }
-        public async Task<List<CompanyDto>> FindAll()
+        public async Task<(List<CompanyDto>, int companiesQty)> FindAll(int page)
         {
-            return await _context.Company
+            const int pageSize = 5;
+
+            var companiesQty = await _context.Company.CountAsync();
+            var maxPages = (int)Math.Ceiling(companiesQty / (decimal)pageSize);
+
+            if (page > maxPages)
+            {
+                var companies = await _context.Company
+                    .Select(a => new CompanyDto
+                    {
+                        Id = a.Id,
+                        Name = a.Name,
+                        Cnpj = a.Cnpj,
+                    })
+                    .OrderBy(c => c.Name)
+                    .Skip((pageSize * maxPages) - pageSize)
+                    .Take(pageSize)
+                    .ToListAsync();
+
+                return (companies, maxPages);
+            }
+            else
+            {
+                var companies = await _context.Company
+                .Select(a => new CompanyDto
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Cnpj = a.Cnpj,
+                })
+                .OrderBy(c => c.Name)
+                .Skip(pageSize * page)
+                .Take(pageSize)
+                .ToListAsync();
+
+                return (companies, maxPages);
+            }
+        }
+        public async Task<List<CompanyDto>> CompaniesListForSearch(string filter)
+        {
+
+            if (string.IsNullOrWhiteSpace(filter) == true)
+            {
+                return [];
+            }
+
+            return await _context.Company.AsNoTracking()
+                .Where(a => a.Name.Contains(filter))
                 .Select(a => new CompanyDto
                 {
                     Id = a.Id,
@@ -26,7 +73,6 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 .OrderBy(c => c.Name)
                 .ToListAsync();
         }
-
         public async Task<int> Count()
         {
             return await _context.Company.CountAsync();
@@ -144,7 +190,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                     JobsQty = a.Jobs.Count,
                     WorkersQty = a.Jobs.SelectMany(b => b.Persons).Count(),
                 })
-                .FirstOrDefaultAsync();    
+                .FirstOrDefaultAsync();
 
             if (company == null)
             {
@@ -201,8 +247,8 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
 
             companyDb.Name = company.Name;
-            companyDb.Cnpj = company.Cnpj;        
-         
+            companyDb.Cnpj = company.Cnpj;
+
             await _context.SaveChangesAsync();
 
             return (company, string.Empty);
@@ -229,7 +275,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
             if (Regex.IsMatch(company.Cnpj, pattern) == false)
             {
                 return (false, "Formato incorreto! O formato correto é: 00.000.000/0000-00");
-            }            
+            }
 
             return (true, string.Empty);
         }

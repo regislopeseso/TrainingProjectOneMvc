@@ -19,7 +19,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
 
         #region Search Mechanisms
-        public async Task<JobPersonIndexDto?> FindAllAsync(int companyId)
+        public async Task<JobPersonIndexDto?> FindAll(int companyId)
         {
             return await _context.Company
                 .Where(a => a.Id == companyId)
@@ -53,23 +53,25 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .FirstOrDefaultAsync();
         }
-        public async Task<List<WorkersJobsCompaniesReportDto>> ShowAllAsync()
+        public async Task<List<WorkersJobsCompaniesReportDto>> ShowAll()
         {
             return await _context.Person
                         .Where(a => a.Jobs.Any())
                         .Select(a => new WorkersJobsCompaniesReportDto
                         {
                             PersonName = a.Name,
-                            JobsCompanies = a.Jobs.Select(b => new JobCompanyDto
+                            JobsCompanies = a.Jobs.Select(b => new WorkersJobsCompaniesReportDto.JobCompany_Dto
                             {
+                                JobId = b.Id,
                                 JobName = b.Name,
+                                CompanyId = b.Company.Id,
                                 CompanyName = b.Company.Name,
                                 Cnpj = b.Company.Cnpj,
                             }
                             ).ToList()
                         }).ToListAsync();
         }
-        public async Task<List<CompaniesWorkersJobsReportDto>> FindCompaniesAsync()
+        public async Task<List<CompaniesWorkersJobsReportDto>> FindCompanies()
         {
             return await _context.Company
                 .Select(a => new CompaniesWorkersJobsReportDto
@@ -83,7 +85,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 .ToListAsync();
         }
         
-        public async Task<int> CountAsync()
+        public async Task<int> Count()
         {
             return await _context.Person               
                 .Where(a => a.Jobs.Any())
@@ -93,7 +95,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         #endregion
 
         #region CREATE
-        public async Task<(bool, string)> CreateAsync(JobPersonDto jobPerson)
+        public async Task<(bool, string)> Create(JobPersonDto jobPerson)
         {
             var (isValid, message) = this.WorkerIsValid(jobPerson);
 
@@ -144,7 +146,6 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 return (false, "É necessário informar um cargo.");
             }
 
-
             return (true, string.Empty);
         }
 
@@ -153,7 +154,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
         #endregion
 
         #region Delete
-        public async Task<(JobPersonDeleteDto?, string)> Delete(int personId, int jobId)
+        public async Task<(JobPersonDeleteDto?, string)> DeleteCheck(int personId, int jobId)
         {
             if (jobId <= 0 || personId <= 0)
             {
@@ -203,7 +204,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
             return (result, string.Empty);
         }
 
-        public async Task DeleteAsync(int jobId, int personId)
+        public async Task Delete(int jobId, int personId)
         {
             var jobDb = await _context.Job
                 .Include(a => a.Persons)

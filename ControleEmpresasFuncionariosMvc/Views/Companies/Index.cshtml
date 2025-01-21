@@ -13,7 +13,7 @@
         <a asp-action="Create" class="btn btn-success">Adicionar nova Empresa</a>
     </p>
 
-    
+
 
     @if (this.Model.Content == null || this.Model.Content.Count <= 0)
     {
@@ -79,6 +79,46 @@
 
         <hr class="custom-hr w-100" />
     }
+
+    <div>
+        <ul class="pagination">
+
+            <li class="page-item @(this.Model.Page == 0 ? "disabled" : "")">
+                <a type="button" class="page-link"
+                   asp-controller="Companies"
+                   asp-action="Index"
+                   asp-route-page="@(this.Model.Page-1)">
+                    &laquo;
+                </a>
+            </li>
+            
+            @for (int i = 0; i < this.Model.PagesQty; i++)
+            {
+
+                <li class="page-item @(i == this.Model.Page ? "active" : "")">
+                    <a type="button" class="page-link"
+                       asp-controller="Companies"
+                       asp-action="Index"
+                       asp-route-page="@i">
+                        @(i + 1)
+                    </a>
+                </li>
+            }
+
+
+            <li class="page-item @(this.Model.Page == this.Model.PagesQty - 1 ? "disabled" : "")">
+                <a type="button" class="page-link"
+                   asp-controller="Companies"
+                   asp-action="Index"
+                   asp-route-page="@(this.Model.Page+1)">
+                    &raquo;
+                </a>
+            </li>
+            
+        </ul>
+    </div>
+
+    <hr class="custom-hr w-100" />
 
     <div class="d-flex align-items-center" style="margin-left: 0%; width: 100%;">
         <a type="button" class="btn btn-outline-primary"

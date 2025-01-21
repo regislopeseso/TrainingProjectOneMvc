@@ -15,6 +15,8 @@
 
     <hr class="custom-hr w-100" />
 
+
+
     @if (this.Model.Content == null || this.Model.Content.Count <= 0)
     {
         <div class="alert alert-dismissible alert-primary width-style5">
@@ -25,6 +27,15 @@
     }
     else
     {
+        if (this.Model.Content.Count >= 5)
+        {
+            <form method="get">
+                <div class="input-group mb-3 width-style6">
+                    <input name="Filter" type="text" class="form-control" placeholder="Filtrar" aria-label="Filtrar">
+                    <button class="btn btn-primary" type="submit">Filtrar</button>
+                </div>
+            </form>
+        }
         <div class="alert alert-dismissible alert-primary width-style1">
 
             <table class="table table-hover table-secondary text-center">
@@ -74,9 +85,13 @@
             </table>
 
         </div>
-    
+
         <hr class="custom-hr w-100" />
     }
+
+
+
+
 
     <div class="d-flex align-items-center" style="margin-left: 0%; width: 100%;">
         <a type="button" class="btn btn-outline-primary"

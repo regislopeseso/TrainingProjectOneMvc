@@ -1,9 +1,7 @@
-﻿using ControleEmpresasFuncionariosMvc.Data;
-using ControleEmpresasFuncionariosMvc.Dtos;
+﻿using ControleEmpresasFuncionariosMvc.Dtos;
 using ControleEmpresasFuncionariosMvc.Models.ViewModels;
 using ControleEmpresasFuncionariosMvc.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
@@ -13,9 +11,21 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         private readonly JobService _jobService = jobService;
 
         #region GET: Persons
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    var result = await _personService.FindAll();
+
+        //    var response = new ResponseViewModel<List<PersonDto>>()
+        //    {
+        //        Content = result
+        //    };
+
+        //    return View(response);
+        //}
+
+        public async Task<IActionResult> Index(string? filter)
         {
-            var result = await _personService.FindAll();
+            var result = await _personService.FindAll(filter);
 
             var response = new ResponseViewModel<List<PersonDto>>()
             {

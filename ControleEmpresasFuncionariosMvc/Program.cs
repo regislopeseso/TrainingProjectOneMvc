@@ -6,7 +6,6 @@ var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("ControleEmpresasFuncionariosMvcContext");
 
-
 /*
  * Ordem de construção:
  * 1. Controller (apenas a parte que aciona views)
@@ -15,7 +14,6 @@ var connectionString = builder.Configuration.GetConnectionString("ControleEmpres
  * 4. Service
  * 5. Model
  */
-
 
 builder.Services.AddDbContext<ControleEmpresasFuncionariosMvcContext>(options =>
     
@@ -35,15 +33,17 @@ builder.Services.AddControllersWithViews();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
-    app.UseExceptionHandler("/Home/Error");
+    app.UseExceptionHandler("/Shared/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
+app.UseStatusCodePagesWithReExecute("/Error/NotFound");
 
 app.UseHttpsRedirection();
+
 app.UseRouting();
 
 app.UseAuthorization();
@@ -54,6 +54,5 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
 
 app.Run();

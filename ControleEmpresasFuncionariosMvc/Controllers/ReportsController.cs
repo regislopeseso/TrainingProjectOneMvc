@@ -1,9 +1,7 @@
 ﻿using ControleEmpresasFuncionariosMvc.Dtos;
-using ControleEmpresasFuncionariosMvc.Models;
 using ControleEmpresasFuncionariosMvc.Models.ViewModels;
 using ControleEmpresasFuncionariosMvc.Services;
 using Microsoft.AspNetCore.Mvc;
-using NuGet.DependencyResolver;
 
 namespace ControleEmpresasFuncionariosMvc.Controllers
 {
@@ -26,7 +24,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
         {
             var companiesQty= await _companyService.Count();
             var unemploeyQty = await _personService.CountUnemployed();
-            var workersQty = await _jobsPersonsService.CountAsync();
+            var workersQty = await _jobsPersonsService.Count();
 
             var response = new ResponseViewModel<ReportsIndexDto>()
             {          
@@ -43,7 +41,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
 
         public async Task<IActionResult> ReportCompaniesWorkersJobsAsync()
         {
-            var jobs = await _jobsPersonsService.FindCompaniesAsync();
+            var jobs = await _jobsPersonsService.FindCompanies();
 
             var response = new ResponseViewModel<List<CompaniesWorkersJobsReportDto>>()
             {
@@ -67,7 +65,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
 
         public async Task<IActionResult> ReportWorkersJobsCompaniesAsync()
         {
-            var workers = await _jobsPersonsService.ShowAllAsync();
+            var workers = await _jobsPersonsService.ShowAll();
 
             var response = new ResponseViewModel<List<WorkersJobsCompaniesReportDto>>()
             {
