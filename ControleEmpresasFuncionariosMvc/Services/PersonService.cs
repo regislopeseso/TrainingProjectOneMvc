@@ -113,6 +113,12 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 return (person, message);
             }
 
+            person.Name = String.Join(" ", person.Name
+                                     .Split(" ")
+                                     .Select(word => new String(word.Select((c, index) => index == 0 ? char.ToUpper(c) : char.ToLower(c))
+                                     .ToArray()))
+                                     );
+
             _context.Add(new Person()
             {
                 Name = person.Name,
@@ -136,9 +142,24 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 return (false, "É necessário preencher o campo \"Nome\"");
             }
 
+            if (person.Name.Length < 3)
+            {
+                return (false, "É necessário que o nome tenha no mínimo três caracteres");
+            }
+
             if (person.BirthDate == null)
             {
                 return (false, "É necessário preencher o campo \"Data de Nascimento\"");
+            }
+
+            if (DateTime.Now.Year - person.BirthDate.Value.Year < 18)
+            {
+                return (false, "Não é pssível cadastrar um menor de idade");
+            }
+
+            if (DateTime.Now.Year - person.BirthDate.Value.Year > 100)
+            {
+                return (false, "Não é possível cadastrar uma pessoa que tenha mais de 100 anos");
             }
 
             return (true, string.Empty);
@@ -231,7 +252,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                .Where(c => c.Id == id)
                .Select(x => new PersonDto
                {
-                   Id = x.Id,
+                   Id = x.Id,                   
                    Name = x.Name,
                    BirthDate = x.BirthDate,
                })
@@ -260,6 +281,13 @@ namespace ControleEmpresasFuncionariosMvc.Services
             {
                 return (person, "Pessoa não encontrada!!!");
             }
+
+            person.Name = String.Join(" ", person.Name
+                                     .Split(" ")
+                                     .Select(word => new String(word.Select((c, index) => index == 0 ? char.ToUpper(c) : char.ToLower(c))
+                                     .ToArray()))
+                                     );
+
 
             personDb.Name = person.Name;
             personDb.BirthDate = (DateTime)person.BirthDate;

@@ -23,8 +23,8 @@
     <br />
 
     <div class="alert alert-dismissible alert-primary">
-        <div class="row">
-            <div class="col-6">
+        <div class="row">          
+            <div class="col-4">
 
                 <div class="text-center">
                     <h3>Overview</h3>
@@ -35,11 +35,21 @@
 
                     <br />
 
-                    <h5>Funcionários(@this.Model.Content.CountPersons)</h5>
+                    <h5>Funcionários(@this.Model.Content.CountWorkers)</h5>
+
+                    <br />
+
+                    <h5>Pessoas(@this.Model.Content.CountPersons)</h5>
                 </div>
             </div>
 
-            <div class="col-6 alert alert-dismissible alert-secondary text-center">
+            <div class="col-4">
+                <div class="text-center">
+                    <canvas id="overviewChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+
+            <div class="col-4 alert alert-dismissible alert-secondary text-center">
                 <h4>Busca rápida</h4>
 
                 <br />
@@ -98,6 +108,46 @@
 
             <hr class="custom-hr w-100" />
         }
-    }
+    }    
 </div>
 
+
+<script src="/js/chart.js/dist/chart.js"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document.getElementById('overviewChart').getContext('2d');
+
+        // Dados para o gráfico
+        const data = {
+            labels: ['Empresas', 'Funcionários', 'Pessoas'],
+            datasets: [{
+                label: 'Quantidade',
+                data: [@this.Model.Content.CountCompanies, @this.Model.Content.CountWorkers, @this.Model.Content.CountPersons],
+                backgroundColor: ['rgba(54, 162, 235, 0.2)', 'rgba(255, 99, 132, 0.2)', 'rgba(75, 192, 75, 0.2)'],
+                borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)', 'rgba(75, 192, 75, 1)' ],
+                borderWidth: 1
+            }]
+        };
+
+        // Configuração do gráfico
+        const config = {
+            type: 'pie', // Tipo de gráfico (bar, pie, line, etc.)
+            data: data,
+            options: {
+                responsive: true,
+                // scales: {
+                //     y: {
+                //         beginAtZero: true
+                //     }
+                // }
+            }
+        };
+
+        // Renderizar o gráfico
+        new Chart(ctx, config);
+    });
+</script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>

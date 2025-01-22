@@ -23,6 +23,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
                 {
                     CountCompanies = await _companyService.Count(),
                     CountPersons = await _personService.Count(),
+                    CountWorkers = await _jobsPersonsService.Count(),
                     Companies = companies,
                     Persons = persons
                 }

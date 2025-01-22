@@ -101,11 +101,21 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
 
         [HttpPost]
         //Post: Companies/Delete
-        public async Task<IActionResult> DeleteAsync(int jobId, int personId, int companyId)
+        public async Task<IActionResult> Delete(int jobId, int personId, int companyId)
         {
             await _jobsPersonsService.Delete(jobId, personId);
 
             return RedirectToAction(nameof(Index), new { companyId = companyId });
+        }
+
+
+        [HttpPost]
+        //Post: Companies/Delete
+        public async Task<IActionResult> DeleteAll(int companyId)
+        {
+            await _jobsPersonsService.DeleteAll(companyId);
+
+            return RedirectToAction("Index", "JobsPersons", new { companyId = companyId });
         }
         #endregion
     }

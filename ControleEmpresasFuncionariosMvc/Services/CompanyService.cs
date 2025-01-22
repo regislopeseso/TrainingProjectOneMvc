@@ -20,26 +20,24 @@ namespace ControleEmpresasFuncionariosMvc.Services
 
             var companiesQty = await _context.Company.CountAsync();
             var maxPages = (int)Math.Ceiling(companiesQty / (decimal)pageSize);
+            var lastPages = 0;
+            
+
 
             if (page > maxPages)
             {
-                var companies = await _context.Company
-                    .Select(a => new CompanyDto
-                    {
-                        Id = a.Id,
-                        Name = a.Name,
-                        Cnpj = a.Cnpj,
-                    })
-                    .OrderBy(c => c.Name)
-                    .Skip((pageSize * maxPages) - pageSize)
-                    .Take(pageSize)
-                    .ToListAsync();
-
-                return (companies, maxPages);
+                lastPages = (pageSize * maxPages) - pageSize;
+            }
+            else if (page < 0)
+            {
+                lastPages = 0;
             }
             else
             {
-                var companies = await _context.Company
+                lastPages = pageSize * page;
+            }
+
+            var companies = await _context.Company
                 .Select(a => new CompanyDto
                 {
                     Id = a.Id,
@@ -47,12 +45,11 @@ namespace ControleEmpresasFuncionariosMvc.Services
                     Cnpj = a.Cnpj,
                 })
                 .OrderBy(c => c.Name)
-                .Skip(pageSize * page)
+                .Skip(lastPages)
                 .Take(pageSize)
                 .ToListAsync();
 
-                return (companies, maxPages);
-            }
+            return (companies, maxPages);
         }
         public async Task<List<CompanyDto>> CompaniesListForSearch(string filter)
         {
@@ -109,6 +106,11 @@ namespace ControleEmpresasFuncionariosMvc.Services
             if (string.IsNullOrWhiteSpace(company.Name) == true)
             {
                 return (false, "É necessário preencher o campo \"Nome\"");
+            }
+
+            if (company.Name.Length < 3)
+            {
+                return (false, "É necessário que o nome da empresa tenha pelo menos 3 caracteres");
             }
 
             if (string.IsNullOrWhiteSpace(company.Cnpj) == true)

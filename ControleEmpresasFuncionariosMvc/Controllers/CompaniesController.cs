@@ -17,7 +17,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
             var response = new ResponseViewModel<List<CompanyDto>>()
             {
                 Content = companies,
-                Page = page,
+                PageIn = page,
                 PagesQty = pagesQty
             };
 

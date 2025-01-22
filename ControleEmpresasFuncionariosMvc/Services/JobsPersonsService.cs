@@ -84,12 +84,12 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 })
                 .ToListAsync();
         }
-        
+
         public async Task<int> Count()
         {
-            return await _context.Person               
+            return await _context.Person
                 .Where(a => a.Jobs.Any())
-                .CountAsync();                     
+                .CountAsync();
         }
 
         #endregion
@@ -198,7 +198,6 @@ namespace ControleEmpresasFuncionariosMvc.Services
             {
                 Job = job,
                 Person = person,
-
             };
 
             return (result, string.Empty);
@@ -224,6 +223,31 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 }
             }
         }
+        public async Task DeleteAll(int companyId)
+        {
+            //var jobs = await _context.Job
+            //    .Where(a => a.Company.Id == companyId)
+            //    .ToListAsync();
+
+            //if (jobs != null)
+            //{
+            //    _context.Job.RemoveRange(jobs);
+            //    await _context.SaveChangesAsync();
+            //}
+
+            var company = await _context.Company
+                .Include(a => a.Jobs)
+                .Where(a => a.Id == companyId)
+                .FirstOrDefaultAsync();
+
+            if (company != null)
+            {
+                company.Jobs.Clear();
+                await _context.SaveChangesAsync();
+            }
+        }
+
+
         #endregion
     }
 }

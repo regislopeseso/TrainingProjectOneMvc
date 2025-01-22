@@ -68,7 +68,7 @@ h5 {
 }
 
 .width-style1 {
-    max-width: 800px;
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -127,4 +127,11 @@ table tr td {
 
 .alert-dismissible2 {
     padding-right: 1em;
+}
+
+.delete-all-form {
+    position: fixed;
+    bottom: 20px; /* Distância da parte inferior da tela */
+    right: 20px; /* Distância do lado direito da tela */
+    z-index: 1000; /* Certifique-se de que o botão esteja acima de outros elementos */
 }

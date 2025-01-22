@@ -3,6 +3,7 @@ using ControleEmpresasFuncionariosMvc.Dtos;
 using ControleEmpresasFuncionariosMvc.Models;
 using Microsoft.AspNetCore.Razor.Language.Intermediate;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Text.Json.Serialization;
 
 
@@ -69,6 +70,11 @@ namespace ControleEmpresasFuncionariosMvc.Services
             {
                 return (job, "A empresa não foi encontrada!%$#");
             }
+
+            job.Name = new string(job.Name
+                                     .Select((c, index) => index == 0 ? char.ToUpper(c) : char.ToLower(c))
+                                     .ToArray());
+                                     
 
             _context.Add(new Job()
             {
@@ -178,6 +184,9 @@ namespace ControleEmpresasFuncionariosMvc.Services
                 return (job, "Empresa não encontrada!!!");
             }
 
+            job.Name = new string(job.Name
+                                     .Select((c, index) => index == 0 ? char.ToUpper(c) : char.ToLower(c))
+                                     .ToArray());
 
             jobDb.Name = job.Name;
 
