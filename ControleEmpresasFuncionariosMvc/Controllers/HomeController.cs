@@ -26,7 +26,7 @@ namespace ControleEmpresasFuncionariosMvc.Controllers
                     CountWorkers = await _jobsPersonsService.Count(),
                     Companies = companies,
                     Persons = persons
-                }
+                }           
             };
 
             return View(response);

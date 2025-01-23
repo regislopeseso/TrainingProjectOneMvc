@@ -4,8 +4,7 @@ namespace ControleEmpresasFuncionariosMvc.Models.ViewModels
 {
     public class ResponseViewModel<T>
     {
-        public T? Content { get; set; }
- 
+        public T? Content { get; set; } 
         public int? PageIn { private get; set; }
         public string? Message { get; set; }
         //public int? Page {  get; set; }

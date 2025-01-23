@@ -252,7 +252,7 @@ namespace ControleEmpresasFuncionariosMvc.Services
                .Where(c => c.Id == id)
                .Select(x => new PersonDto
                {
-                   Id = x.Id,                   
+                   Id = x.Id,
                    Name = x.Name,
                    BirthDate = x.BirthDate,
                })

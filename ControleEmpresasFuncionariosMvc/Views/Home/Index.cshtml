@@ -6,68 +6,37 @@
     ViewData["Title"] = "Página Inicial";
 }
 
-<div class="text-center">
-
-    <br />
-    <br />
+<div class="container-fluid text-center">
 
     <h1 class="display-1">Protótipo:</h1>
     <h2><strong>Controle Empresas, Cargos, Pessoas e Funcionários</strong></h2>
 
-    <br />
-    <br />
-
     <hr class="custom-hr w-100" />
 
-    <br />
-    <br />
-
-    <div class="alert alert-dismissible alert-primary">
-        <div class="row">          
-            <div class="col-4">
-
-                <div class="text-center">
-                    <h3>Overview</h3>
-
-                    <br />
-
-                    <h5>Empresas(@this.Model.Content.CountCompanies)</h5>
-
-                    <br />
-
-                    <h5>Funcionários(@this.Model.Content.CountWorkers)</h5>
-
-                    <br />
-
-                    <h5>Pessoas(@this.Model.Content.CountPersons)</h5>
-                </div>
+    <div class="alert alert-dismissible alert-primary" style="height: max-content">
+        <div class="row h-100">
+            <div class="col-4 d-flex flex-column justify-content-center">
+                <h3>Overview</h3>
+                <h5>Empresas(@this.Model.Content.CountCompanies)</h5>
+                <h5>Funcionários(@this.Model.Content.CountWorkers)</h5>
+                <h5>Pessoas(@this.Model.Content.CountPersons)</h5>
             </div>
 
-            <div class="col-4">
-                <div class="text-center">
-                    <canvas id="overviewChart" width="400" height="400"></canvas>
-                </div>
+            <div class="col-4 d-flex justify-content-center align-items-center">
+                <canvas id="overviewChart" , style="max-width: 90%; max-height: 90%"></canvas>
             </div>
 
-            <div class="col-4 alert alert-dismissible alert-secondary text-center">
+            <div class="col-4 alert alert-secondary d-flex flex-column justify-content-center">
                 <h4>Busca rápida</h4>
-
-                <br />
-
-                <div class="width-style7">
-                    <form method="get">
-                        <div class="input-group">
-                            <input name="Filter" type="text" class="form-control" placeholder="Buscar" aria-label="Filtrar">
-                            <button class="btn btn-secondary btn-lg" type="submit">Filtrar</button>
-                        </div>
-                    </form>
-                </div>
+                <form method="get" class="d-flex justify-content-center">
+                    <div class="input-group">
+                        <input name="Filter" type="text" class="form-control" placeholder="Buscar" aria-label="Filtrar">
+                        <button class="btn btn-secondary btn-lg" type="submit">Filtrar</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-
-    <br />
-    <br />
 
     <hr class="custom-hr w-100" />
     @{
@@ -107,8 +76,8 @@
             </div>
 
             <hr class="custom-hr w-100" />
-        }
-    }    
+        }     
+    }
 </div>
 
 
@@ -136,6 +105,7 @@
             data: data,
             options: {
                 responsive: true,
+                maintainAspectRatio: false,
                 // scales: {
                 //     y: {
                 //         beginAtZero: true
@@ -151,3 +121,4 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
