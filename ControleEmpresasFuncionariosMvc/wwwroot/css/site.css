@@ -148,3 +148,12 @@ table tr td {
     background-size: var(--bs-accordion-btn-icon-width);
     transition: var(--bs-accordion-btn-icon-transition);
 }
+
+.accordion-button:not(.collapsed) {
+    background-color: ; /* Cor de fundo azul quando o botão está expandido */
+    color: white; /* Cor do texto branco para contraste */
+}
+
+    .accordion-button:not(.collapsed):hover {
+        background-color: darkblue; /* Cor mais escura ao passar o mouse */
+    }
