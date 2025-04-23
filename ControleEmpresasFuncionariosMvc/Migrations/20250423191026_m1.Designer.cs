@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleEmpresasFuncionariosMvc.Migrations
 {
     [DbContext(typeof(ControleEmpresasFuncionariosMvcContext))]
-    [Migration("20250108181415_Second")]
-    partial class Second
+    [Migration("20250423191026_m1")]
+    partial class m1
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,9 +35,6 @@ namespace ControleEmpresasFuncionariosMvc.Migrations
 
                     b.Property<string>("Cnpj")
                         .HasColumnType("longtext");
-
-                    b.Property<int>("JobsQty")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -90,32 +87,19 @@ namespace ControleEmpresasFuncionariosMvc.Migrations
                     b.ToTable("Person");
                 });
 
-            modelBuilder.Entity("ControleEmpresasFuncionariosMvc.Models.Worker", b =>
+            modelBuilder.Entity("JobPerson", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("JobsId")
                         .HasColumnType("int");
 
-                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("CompanyId")
+                    b.Property<int>("PersonsId")
                         .HasColumnType("int");
 
-                    b.Property<int>("JobId")
-                        .HasColumnType("int");
+                    b.HasKey("JobsId", "PersonsId");
 
-                    b.Property<int>("PersonId")
-                        .HasColumnType("int");
+                    b.HasIndex("PersonsId");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("CompanyId");
-
-                    b.HasIndex("JobId");
-
-                    b.HasIndex("PersonId");
-
-                    b.ToTable("Woker");
+                    b.ToTable("JobPerson");
                 });
 
             modelBuilder.Entity("ControleEmpresasFuncionariosMvc.Models.Job", b =>
@@ -129,31 +113,19 @@ namespace ControleEmpresasFuncionariosMvc.Migrations
                     b.Navigation("Company");
                 });
 
-            modelBuilder.Entity("ControleEmpresasFuncionariosMvc.Models.Worker", b =>
+            modelBuilder.Entity("JobPerson", b =>
                 {
-                    b.HasOne("ControleEmpresasFuncionariosMvc.Models.Company", "Company")
+                    b.HasOne("ControleEmpresasFuncionariosMvc.Models.Job", null)
                         .WithMany()
-                        .HasForeignKey("CompanyId")
+                        .HasForeignKey("JobsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("ControleEmpresasFuncionariosMvc.Models.Job", "Job")
+                    b.HasOne("ControleEmpresasFuncionariosMvc.Models.Person", null)
                         .WithMany()
-                        .HasForeignKey("JobId")
+                        .HasForeignKey("PersonsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("ControleEmpresasFuncionariosMvc.Models.Person", "Person")
-                        .WithMany()
-                        .HasForeignKey("PersonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Company");
-
-                    b.Navigation("Job");
-
-                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("ControleEmpresasFuncionariosMvc.Models.Company", b =>

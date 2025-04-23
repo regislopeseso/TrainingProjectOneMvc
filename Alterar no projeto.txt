@@ -1,0 +1,19 @@
+buscar pelo nome do cargo;
+
+filtrar em uma empresa os funcionários que entraram
+neste mês;
+
+
+No relatório dos funcionários:
+-> permtir que a empresa
+cujo cargo que o funcionário possui seja acessível
+via link e ao clicar abra a página de "Detalhes" da 
+empresa;
+-> permitir que ao clicar em algum cargo do
+funcionário abrar a página de "Editar" do cargo.
+
+Tratar o erro de colocar um valor qualquer na url
+de modo que o usúario permaneca na mesma página
+que ele está mas no topo da página apareça uma 
+mensagem de erro dizendo que os parâmetros 
+fornecidos são inválidos.

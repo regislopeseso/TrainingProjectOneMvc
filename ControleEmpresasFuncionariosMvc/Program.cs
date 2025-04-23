@@ -4,8 +4,6 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("ControleEmpresasFuncionariosMvcContext");
-
 /*
  * Ordem de construção:
  * 1. Controller (apenas a parte que aciona views)
@@ -15,13 +13,6 @@ var connectionString = builder.Configuration.GetConnectionString("ControleEmpres
  * 5. Model
  */
 
-builder.Services.AddDbContext<ControleEmpresasFuncionariosMvcContext>(options =>
-    
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
-        mysqlOptions => mysqlOptions.MigrationsAssembly("ControleEmpresasFuncionariosMvc"))
-
-);
-
 builder.Services.AddScoped<CompanyService>();
 builder.Services.AddScoped<JobService>();
 builder.Services.AddScoped<PersonService>();
@@ -29,6 +20,16 @@ builder.Services.AddScoped<JobsPersonsService>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddDbContext<ControleEmpresasFuncionariosMvcContext>(options =>
+{
+    options.UseMySql(
+        connectionString,
+        ServerVersion.AutoDetect(connectionString),
+        options => { options.CommandTimeout(120); }
+        );
+});
 
 var app = builder.Build();
 
